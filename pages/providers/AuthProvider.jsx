@@ -31,12 +31,6 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
 
-
-
-
-
-
-
   useEffect(()=>{
     dispatch({type:actionTypes.FETCHING_START});
     fetch("/api/server")
@@ -113,10 +107,6 @@ const AuthProvider = ({ children }) => {
       return unsubscribe();
     };
   }, []);
-
-
-
-
 
 
 

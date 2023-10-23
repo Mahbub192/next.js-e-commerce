@@ -163,7 +163,7 @@ const Banner = () => {
           <RoundCard></RoundCard>
         </div>
 
-        <div className="md:col-start-7  md:h-[490px] md:col-span-2 md:row-start-1 md:row-span-2 bg-white order-4 rounded-lg">
+        <div className="md:col-start-7  md:h-[490px] md:col-span-2 md:row-start-1 md:row-span-2 bg-white order-4 rounded-lg overflow-y-auto">
           <RightSideBar></RightSideBar>
         </div>
       </div>
