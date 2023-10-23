@@ -5,9 +5,11 @@ import RootLayout from "../Layouts/RootLayout";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
+import { useRouter } from "next/router";
 
 const ProductDetails = ({ item }) => {
   const { user } = useContext(AuthContext);
+  const router = useRouter()
   let email = user?.email;
   const [counter, setCounter] = useState(0);
 
@@ -66,13 +68,16 @@ const ProductDetails = ({ item }) => {
       body: JSON.stringify(buyItem),
     });
     const responseData = await response.json();
+    window.location.replace(responseData.url)
     if (responseData.data.acknowledged) {
       Swal.fire({
         icon: "success",
         title: "Product added successfully in database.",
         showConfirmButton: false,
         timer: 1500,
+        
       });
+      window.location.replace('/')     
     }
   };
 
