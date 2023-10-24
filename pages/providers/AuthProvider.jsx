@@ -9,46 +9,60 @@ import {
   updateProfile,
   FacebookAuthProvider,
 } from "firebase/auth";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import app from "../firebase/Firebase.config";
-import { createContext, useReducer } from 'react';
-import { initialState, productReducer } from "../states/productState/ProductReducer";
+import { createContext, useReducer } from "react";
+import {
+  initialState,
+  productReducer,
+} from "../states/productState/ProductReducer";
 import { actionTypes } from "../states/productState/ActionTypes";
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(productReducer, initialState);
+  
 
-
-
-    const [state,dispatch]=useReducer(productReducer,initialState);
-
-
-
-// console.log(state);
+  // console.log(state);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
+  const [menuValue, setMenuValue] = useState("");
+  const [filterProducts, setFilterProducts] = useState([])
 
-  useEffect(()=>{
-    dispatch({type:actionTypes.FETCHING_START});
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCHING_START });
     fetch("/api/server")
-    .then((res)=>res.json())
-    .then((data)=>dispatch({type:actionTypes.FETCHING_SUCCESS,payload:data.data})
-    )
-
-    
-    
-    .catch(()=>{
-      dispatch({type:actionTypes.FETCHING_ERROR})
-
-    })
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: actionTypes.FETCHING_SUCCESS, payload: data.data })
+      )
+      .catch(() => {
+        dispatch({ type: actionTypes.FETCHING_ERROR });
+      });
     setLoading(false);
+  }, []);
 
-  },[])
 
+   
 
+  useEffect(() => {
+    // const value= state.products.map(single => single.category == menuValue)
+    // console.log(value);
+    // if (state?.products.category == menuValue) {
+      
+    // } else {
+    //   console.log(false);
+    // }
+
+    let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
+
+   setFilterProducts(xyzProduct);
+
+    console.log(xyzProduct);
+  }, [menuValue]);
 
   // useEffect(() => {
   //   const dataFunction = async () => {
@@ -62,7 +76,6 @@ const AuthProvider = ({ children }) => {
   //   dataFunction();
   // }, []);
 
-
   // console.log(state);
 
   const provider = new GoogleAuthProvider();
@@ -71,7 +84,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-
 
   const signIn = (email, password) => {
     setLoading(true);
@@ -97,7 +109,6 @@ const AuthProvider = ({ children }) => {
   };
 
 
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -107,8 +118,6 @@ const AuthProvider = ({ children }) => {
       return unsubscribe();
     };
   }, []);
-
-
 
   const value = {
     data12,
@@ -121,13 +130,13 @@ const AuthProvider = ({ children }) => {
     googleLogin,
     facebookLogin,
     dispatch,
-    state
-  
+    state,
+    menuValue,
+    setMenuValue,
+    filterProducts,
   };
 
-  return (
-    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

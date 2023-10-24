@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -26,6 +26,7 @@ import Image from "next/image";
 import { Autoplay, Navigation } from "swiper/modules";
 import RoundCard from "../componants/RoundCard";
 import RightSideBar from "../componants/RightSideBar";
+import { AuthContext } from "../providers/AuthProvider";
 
 const categories = [
   {
@@ -81,6 +82,9 @@ const categories = [
 ];
 
 const Banner = () => {
+
+
+  const {menuValue, setMenuValue} = useContext(AuthContext)
   // useEffect(() => {
   //   const allData = async () => {
   //     const res = await fetch("../../data/Categories.json");
@@ -89,6 +93,15 @@ const Banner = () => {
   //   };
   //   return allData();
   // }, []);
+
+
+
+
+
+  // handle Menu Button
+  const handleMenu = (menu) =>{
+    setMenuValue(menu);
+  }
 
   return (
     <div className="mx-auto container mt-10 ">
@@ -113,8 +126,9 @@ const Banner = () => {
                 </div>
 
                 {categories.map((category) => {
+                 
                   return (
-                    <li key={category.id}>
+                    <li key={category.id} onClick={()=>handleMenu (category?.name)}>
                       <a className="font-semibold text-base	">
                         {" "}
                         {category?.icon} {category?.name}

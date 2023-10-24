@@ -5,11 +5,13 @@ import PaginationControls from "../componants/PaginationControls";
 import { AuthContext } from "../providers/AuthProvider";
 
 const ProductPage = () => {
-  const { state:{products,error,loading} } = useContext(AuthContext);
-  // console.log(products);
-  const pageSize = 12;
+  const {
+    filterProducts,
+    state: { products, error, loading },
+  } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  // const [posts, setPosts] = useState([]);
+  let paginatedPosts;
+  const pageSize = 12;
 
   const DynamicProduct = dynamic(() => import("./Product"), {
     loading: () => <h1 className="text-center">Loading...</h1>,
@@ -20,37 +22,32 @@ const ProductPage = () => {
     setCurrentPage(page);
   };
 
-  const paginatedPosts = paginate(products, currentPage, pageSize);
+  paginatedPosts = paginate(
+    filterProducts.length > 0 ? filterProducts : products,
+    currentPage,
+    pageSize
+  );
 
-  // useEffect(() => {
-  //   if (!loading) {
-  //     setPosts(products);
-  //   }
-  // }, [loading]);
+  let content;
 
-let content;
-
-if(loading){
- content= <p>Loading...</p>
-};
-if(error){
- content= <p>Something went wrong..!</p>
-}
-if(!loading && !error && products.length){
-  content=paginatedPosts?.map((p) => (
-    <DynamicProduct key={p._id} product={p}></DynamicProduct>
-  ))
-}
-
+  if (loading) {
+    content = <p>Loading...</p>;
+  }
+  if (error) {
+    content = <p>Something went wrong..!</p>;
+  }
+  if (!loading && !error && products.length) {
+    content = paginatedPosts?.map((p) => (
+      <DynamicProduct key={p._id} product={p}></DynamicProduct>
+    ));
+  }
 
   return (
     <div>
       <div>
-       
-          <div className="container mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-4 ">
-            {content}
-          </div>
-        
+        <div className="container mx-auto grid lg:grid-cols-4 md:grid-cols-2 gap-4 ">
+          {content}
+        </div>
       </div>
 
       <PaginationControls
