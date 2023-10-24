@@ -12,10 +12,10 @@ import {
 import { MdProductionQuantityLimits } from "react-icons/md";
 import ImageUploadForm from "./ImageUploadForm";
 import Swal from "sweetalert2";
-import  { AuthContext } from "@/pages/providers/AuthProvider";
+import { AuthContext } from "@/pages/providers/AuthProvider";
 
 const SellProducts = () => {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   const [ImageUrl, setImageUrl] = useState([]);
   let email;
   const {
@@ -58,9 +58,9 @@ const SellProducts = () => {
     }
   };
 
-  useEffect(()=>{
-    email=user?.email;
-  },[user])
+  useEffect(() => {
+    email = user?.email;
+  }, [user]);
 
   return (
     <div className="w-3/5 mx-auto bg-white p-10 shadow-2xl">
@@ -143,9 +143,37 @@ const SellProducts = () => {
             </select>
           </div>
         </div>
-          
-        {/* Phone Number and Location Input filed */}
+
+        {/* Product Sub-Category and Product Quantity filed */}
         <div className="flex flex-wrap justify-around gap-6 mt-5">
+          <div className="form-control w-2/5">
+            <label className="label ">
+              <span className="label-text flex items-center">
+                {" "}
+                <MdProductionQuantityLimits />{" "}
+                <span className="pl-2">Product Sub-Category </span>
+              </span>
+            </label>
+            <select
+              {...register("sub-category")}
+              className="input input-bordered"
+            >
+              <option value="Health & Beauty">Health & Beauty</option>
+              <option value="Men's & Boy's Fashion">
+                Men's & Boy's Fashion
+              </option>
+              <option value="Electronic Device">Electronic Device</option>
+              <option value="Sports & Outdoor">Sports & Outdoor</option>
+              <option value="Home & Lifestyle">Home & Lifestyle</option>
+              <option value="Groceries">Groceries</option>
+              <option value="Girl's Fashion">Girl's Fashion</option>
+              <option value="Vehicle & Accessories">
+                Vehicle & Accessories
+              </option>
+              <option value="Kids Fashion">Kids Fashion</option>
+              <option value="All Categories">All Categories</option>
+            </select>
+          </div>
           <div className="form-control w-2/5">
             <label className="label ">
               <span className="label-text flex items-center">
@@ -162,6 +190,10 @@ const SellProducts = () => {
               className="input input-bordered"
             />
           </div>
+        </div>
+
+        {/* Phone Number and Location Input filed */}
+        <div className="flex flex-wrap justify-around gap-6 mt-5">
           <div className="form-control w-2/5">
             <label className="label ">
               <span className="label-text flex items-center">
@@ -174,6 +206,21 @@ const SellProducts = () => {
               {...register("phoneNumber", { required: true })}
               name="phoneNumber"
               placeholder="01********"
+              className="input input-bordered"
+            />
+          </div>
+          <div className="form-control w-2/5">
+            <label className="label ">
+              <span className="label-text flex items-center">
+                {" "}
+                <FaLocationDot /> <span className="pl-2">Location</span>
+              </span>
+            </label>
+            <input
+              type="text"
+              {...register("location", { required: true })}
+              name="location"
+              placeholder="Location"
               className="input input-bordered"
             />
           </div>
@@ -192,21 +239,6 @@ const SellProducts = () => {
             </div>
           </div>
         </div>
-        <div className="form-control mx-10">
-            <label className="label ">
-              <span className="label-text flex items-center">
-                {" "}
-                <FaLocationDot /> <span className="pl-2">Location</span>
-              </span>
-            </label>
-            <input
-              type="text"
-              {...register("location", { required: true })}
-              name="location"
-              placeholder="Location"
-              className="input input-bordered"
-            />
-          </div>
 
         <div className="">
           <div className="form-control  md:mx-10 mt-4">
