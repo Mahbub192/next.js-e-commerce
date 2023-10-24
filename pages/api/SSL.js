@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { connectToDatabase } from "./mongo";
 const SSLCommerzPayment = require('sslcommerz-lts')
 const store_id = 'abc6533a6603e965'
@@ -13,12 +14,14 @@ async function SSL(req, res) {
 
     if (req.method === "POST") {
       const product = req.body;
+      
+      const tran_id = new ObjectId().toString();
 
       const data = {
         total_amount: product.price,
         currency: 'BDT',
-        tran_id: 'REF123', // use unique tran_id for each api call
-        success_url: 'http://localhost:3030/success',
+        tran_id: tran_id, // use unique tran_id for each api call
+        success_url: `http://localhost:3000/api/success?id=${tran_id}`,
         fail_url: 'http://localhost:3030/fail',
         cancel_url: 'http://localhost:3030/cancel',
         ipn_url: 'http://localhost:3030/ipn',
@@ -27,7 +30,7 @@ async function SSL(req, res) {
         product_category: 'Electronic',
         product_profile: 'general',
         cus_name: 'Customer Name',
-        cus_email: 'customer@example.com',
+        cus_email: product.email,
         cus_add1: 'Dhaka',
         cus_add2: 'Dhaka',
         cus_city: 'Dhaka',
@@ -44,6 +47,30 @@ async function SSL(req, res) {
         ship_postcode: 1000,
         ship_country: 'Bangladesh',
     };
+
+    // console.log(data)
+
+    const sslcz = new SSLCommerzPayment(store_id, store_passwd, is_live)
+    sslcz.init(data).then(apiResponse => {
+        // Redirect the user to payment gateway
+        let GatewayPageURL = apiResponse.GatewayPageURL
+        res.send({url: GatewayPageURL})
+        // console.log('Redirecting to: ', GatewayPageURL)
+    });
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
       // Retrieve all products from the database
     //   const result = await BuyProduct.insertOne(product);
 
