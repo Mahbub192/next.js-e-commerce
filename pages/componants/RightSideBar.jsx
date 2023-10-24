@@ -4,6 +4,8 @@ import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import Link from "next/link";
 import { AuthContext } from "../providers/AuthProvider";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+
 
 const RightSideBar = () => {
   const {

@@ -1,4 +1,4 @@
-import { Fragment, useContext, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import { Tab } from "@headlessui/react";
 import Review from "@/pages/Products/Review";
 import RootLayout from "../Layouts/RootLayout";
@@ -6,10 +6,12 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
 import { useRouter } from "next/router";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const ProductDetails = ({ item }) => {
   const { user } = useContext(AuthContext);
-  const router = useRouter()
+  const [ImageChange, setImageChange] = useState(null)
+  const router = useRouter();
   let email = user?.email;
   const [counter, setCounter] = useState(0);
 
@@ -30,8 +32,11 @@ const ProductDetails = ({ item }) => {
     }
   };
 
+  const handelImage = (image) =>{
+    setImageChange(image)
+  }
+
   const handelBuyButton = async (item) => {
-    
     const {
       _id,
       title,
@@ -68,37 +73,67 @@ const ProductDetails = ({ item }) => {
       body: JSON.stringify(buyItem),
     });
     const responseData = await response.json();
-    window.location.replace(responseData.url)
+    window.location.replace(responseData.url);
     if (responseData.data.acknowledged) {
       Swal.fire({
         icon: "success",
         title: "Product added successfully in database.",
         showConfirmButton: false,
         timer: 1500,
-        
       });
-      window.location.replace('/')     
+      window.location.replace("/");
     }
   };
 
   return (
-    <div>
+    <div className="">
       <div className="bg-[#EDF2FD]">
-        <div className="md:flex justify-evenly pt-10">
-          <div className="">
-            <img
-              className="object-cover max-w-md border w-full h-auto ml-32"
-              src={item.images[0]}
-              alt=""
-            />
-            <div className="md:flex gap-4">
+        <div className="container mx-auto md:flex items-center justify-around pt-10">
+          <div className="md:w-1/2">
+            <TransformWrapper
+              initialScale={1}
+              initialPositionX={200}
+              initialPositionY={100}
+            >
+              {({ zoomIn, zoomOut, resetTransform }) => (
+                <React.Fragment>
+                  <div className="tools mb-5">
+                    <button
+                      className="border-2 border-blue-400 px-5 py-2 rounded-lg"
+                      onClick={() => zoomIn()}
+                    >
+                      Zoom in+
+                    </button>
+                    <button
+                      className="border-2 border-blue-400 px-5 py-2 rounded-lg mx-2 md:mx-5"
+                      onClick={() => zoomOut()}
+                    >
+                      Zoom out -
+                    </button>
+                    <button
+                      className="border-2 border-blue-400 px-5 py-2 rounded-lg"
+                      onClick={() => resetTransform()}
+                    >
+                      Reset x
+                    </button>
+                  </div>
+                  <TransformComponent>
+                    <img className="h-[600px] w-[700px]" src={ ImageChange==null? item.images[0] : ImageChange} alt="" />
+                    
+                  </TransformComponent>
+                </React.Fragment>
+              )}
+            </TransformWrapper>
+            <div className="flex items-center justify-center gap-4 md:w-1/2 md:pl-10">
               <img
-                className="object-fill border-2 w-32 max-h-32 mt-4 ml-40"
+              onClick={()=>handelImage(item.images[1])}
+                className="object-fill border-2 w-32 max-h-32 mt-4 md:ml-40"
                 src={item.images[1]}
                 alt=""
               />
               <img
-                className="object-fill border-2 w-32 max-h-32 mt-4"
+              onClick={()=>handelImage(item.images[2])}
+                className="object-fill border-2 w-32 md:max-h-32 mt-4"
                 src={item.images[2]}
                 alt=""
               />
