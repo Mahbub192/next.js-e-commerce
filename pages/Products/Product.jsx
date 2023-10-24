@@ -2,20 +2,21 @@ import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { actionTypes } from "../states/productState/ActionTypes";
+import toast, { Toaster } from 'react-hot-toast';
 
-
+const notify = () => toast('Here is your toast.');
 
 const Product = ({ product }) => {
-  const { title, price,rating,image, _id } = product;
+  const { title, price, rating, image, _id } = product;
 
-  const{dispatch}=useContext(AuthContext);
+  const { dispatch } = useContext(AuthContext);
 
   return (
     <div>
       <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="px-4 py-2">
           <h1 className="text-xl font-semibold text-gray-800  dark:text-white">
-            {title?.slice(0,20)}
+            {title?.slice(0, 20)}
           </h1>
         </div>
 
@@ -67,22 +68,28 @@ const Product = ({ product }) => {
         <div className="flex items-center justify-between px-4 py-2 bg-accent">
           <h1 className="text-lg font-bold text-white">$ {price}</h1>
 
-         <Link href={`/Products/${_id}`}>
-         <button className="btn btn-xs  btn-primary text-white" >
-            Buy Now 
+          <Link href={`/Products/${_id}`}>
+            <button className="btn btn-xs  btn-primary text-white">
+              Buy Now
+            </button>
+          </Link>
+
+          <button
+            onClick={() =>
+              dispatch({ type: actionTypes.ADD_TO_CARD, payload: product })
+            }
+       
+            className="btn btn-xs  btn-primary text-white"
+          >
+            Add To Cart
           </button>
-         </Link>
-         
-         
-         <button onClick={()=>dispatch({type:actionTypes.ADD_TO_CARD, payload:product})} className="btn btn-xs  btn-primary text-white" >
-           Add To Cart
-          </button>
-   
-         
         </div>
       </div>
+      <Toaster />
+
     </div>
-// 
+
+    //
   );
 };
 

@@ -1,37 +1,52 @@
 [
     {
         "id":"01",
-        "name":"All Categories"
+        "name":"All Categories",
+        "Category":"all"
 
     },
     {
         "id":"02",
-        "name":"Health & BEauty"
+        "name":"Health & BEauty",
+        "Category":"home-decoration"
+
    
     },
     {
         "id":"03",
-        "name":"Men's & Boy's Fashion"
+        "name":"Men's & Boy's Fashion",
+        "Category":"laptop"
+
     },
     {
         "id":"04",
-        "name":"Electronic Device"
+        "name":"Electronic Device",
+        "Category":"smartphones"
+
     },
     {
         "id":"05",
-        "name":"Sports & Outdoor"
+        "name":"Sports & Outdoor",
+        "Category":"Sports"
+
     },
     {
         "id":"06",
-        "name":"Heome & Lifestyle"
+        "name":"Heome & Lifestyle",
+        "Category":"fragrances"
+
     },
     {
         "id":"07",
-        "name":"Groceries"
+        "name":"Groceries",
+        "Category":"groceries"
+
     },
     {
         "id":"08",
-        "name":"Girl's Fashion "
+        "name":"Girl's Fashion ",
+         "Category":"skincare"
+
     }
    
 ]
