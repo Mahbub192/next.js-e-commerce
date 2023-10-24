@@ -5,7 +5,6 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
   const { user, logOut, state: {cart}} = useContext(AuthContext);
-  console.log(cart);
 
   return (
     <div>
