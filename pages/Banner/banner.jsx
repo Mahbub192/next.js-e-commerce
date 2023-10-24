@@ -118,6 +118,9 @@ const Banner = () => {
               <ul className="menu p-4 w-96  min-h-full bg-white rounded-lg text-base-content">
                 {/* Sidebar content here */}
 
+
+
+
                 <div className="flex justify-between">
                   <h2 className="font-bold text-xl text-accent">
                     All Categories
@@ -126,6 +129,9 @@ const Banner = () => {
                 </div>
 
                 {categories.map((category) => {
+                 
+
+
                  
                   return (
                     <li key={category.id} onClick={()=>handleMenu (category?.name)}>
