@@ -48,20 +48,10 @@ const AuthProvider = ({ children }) => {
 
    
 
+
   useEffect(() => {
-    // const value= state.products.map(single => single.category == menuValue)
-    // console.log(value);
-    // if (state?.products.category == menuValue) {
-      
-    // } else {
-    //   console.log(false);
-    // }
-
-    let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
-
+  let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
    setFilterProducts(xyzProduct);
-
-    console.log(xyzProduct);
   }, [menuValue]);
 
   // useEffect(() => {

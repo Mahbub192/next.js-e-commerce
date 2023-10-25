@@ -5,10 +5,8 @@ import PaginationControls from "../componants/PaginationControls";
 import { AuthContext } from "../providers/AuthProvider";
 
 const ProductPage = () => {
-  const {
-    filterProducts,
-    state: { products, error, loading },
-  } = useContext(AuthContext);
+  const {filterProducts, state: { products, error, loading }} = useContext(AuthContext);
+  
   const [currentPage, setCurrentPage] = useState(1);
   let paginatedPosts;
   const pageSize = 12;

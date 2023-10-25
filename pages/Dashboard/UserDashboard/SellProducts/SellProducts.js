@@ -127,9 +127,8 @@ const SellProducts = () => {
             </label>
             <select {...register("category")} className="input input-bordered">
               <option value="Health & Beauty">Health & Beauty</option>
-              <option value="Men's & Boy's Fashion">
-                Men's & Boy's Fashion
-              </option>
+              <option value="Daily Needs">Daily Needs</option>
+              <option value="Men's & Boy's Fashion">  Men's & Boy's Fashion </option>
               <option value="Electronic Device">Electronic Device</option>
               <option value="Sports & Outdoor">Sports & Outdoor</option>
               <option value="Home & Lifestyle">Home & Lifestyle</option>
