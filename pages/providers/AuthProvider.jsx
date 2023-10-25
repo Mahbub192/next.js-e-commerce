@@ -9,45 +9,85 @@ import {
   updateProfile,
   FacebookAuthProvider,
 } from "firebase/auth";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import app from "../firebase/Firebase.config";
-import { createContext, useReducer } from 'react';
-import { initialState, productReducer } from "../states/productState/ProductReducer";
+import { createContext, useReducer } from "react";
+import {
+  initialState,
+  productReducer,
+} from "../states/productState/ProductReducer";
 import { actionTypes } from "../states/productState/ActionTypes";
 export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(productReducer, initialState);
 
-
-
-    const [state,dispatch]=useReducer(productReducer,initialState);
-
-
-
-// console.log(state);
+  // console.log(state);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
+  const [menuValue, setMenuValue] = useState("");
+  const [filterProducts, setFilterProducts] = useState([]);
+  const [sub_category, setSub_Category] = useState([]);
+  const [filterSub_Category ,setFilterSub_Category] = useState('')
+
+
+
+  useEffect(() => {
+    dispatch({ type: actionTypes.FETCHING_START });
+    fetch("/api/server")
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: actionTypes.FETCHING_SUCCESS, payload: data.data })
+      )
+      .catch(() => {
+        dispatch({ type: actionTypes.FETCHING_ERROR });
+      });
+    setLoading(false);
+  }, []);
+
+  useEffect(() => {
+    let xyzProduct = state?.products.filter(
+      (matchingProduct) => matchingProduct?.category === menuValue
+    );
+  
+    const subCategoriesArray = xyzProduct.map(product => product.sub_category);
+    console.log(54, subCategoriesArray);
+    const uniqueSubCategories = new Set(subCategoriesArray);
+    const uniqueSubCategoriesArray = Array.from(uniqueSubCategories);
+    console.log(57, uniqueSubCategoriesArray);
+  
+    // Set the state, but don't log it here
+    setFilterProducts(xyzProduct);
+    setSub_Category(uniqueSubCategoriesArray);
+    
+  }, [menuValue]);
 
   useEffect(()=>{
-    dispatch({type:actionTypes.FETCHING_START});
-    fetch("/api/server")
-    .then((res)=>res.json())
-    .then((data)=>dispatch({type:actionTypes.FETCHING_SUCCESS,payload:data.data})
-    )
+    let product = state?.products.filter(
+      (matchingProduct) => matchingProduct?.sub_category === filterSub_Category
+    );
+    setFilterProducts(product);
+    console.log(67, product)
+  },[filterSub_Category])
 
-    
-    
-    .catch(()=>{
-      dispatch({type:actionTypes.FETCHING_ERROR})
 
-    })
-    setLoading(false);
 
-  },[])
+  let scrollToProductSection = () => {
+    const productSection = document.getElementById("product-section");
+    if (productSection) {
+      productSection.scrollIntoView({ behavior: "smooth" });
 
+    }
+  };
+  
+  
+  // useEffect(() => {
+  //   // Log the updated subSection state here
+  //   console.log(66, sub_category);
+  // }, [sub_category]);
 
 
   // useEffect(() => {
@@ -62,7 +102,6 @@ const AuthProvider = ({ children }) => {
   //   dataFunction();
   // }, []);
 
-
   // console.log(state);
 
   const provider = new GoogleAuthProvider();
@@ -71,7 +110,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
-
 
   const signIn = (email, password) => {
     setLoading(true);
@@ -96,8 +134,6 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
-
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -107,8 +143,6 @@ const AuthProvider = ({ children }) => {
       return unsubscribe();
     };
   }, []);
-
-
 
   const value = {
     data12,
@@ -121,13 +155,16 @@ const AuthProvider = ({ children }) => {
     googleLogin,
     facebookLogin,
     dispatch,
-    state
-  
+    state,
+    menuValue,
+    setMenuValue,
+    filterProducts,
+    sub_category,
+    setFilterSub_Category,
+    scrollToProductSection,
   };
 
-  return (
-    <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;

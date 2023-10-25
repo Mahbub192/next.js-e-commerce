@@ -76,7 +76,7 @@ const Product = ({ product }) => {
 
           <button
             onClick={() =>
-              dispatch({ type: actionTypes.ADD_TO_CARD, payload: product })
+              dispatch({ type: actionTypes.ADD_TO_CARD, payload: product } )
             }
        
             className="btn btn-xs  btn-primary text-white"
