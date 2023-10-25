@@ -22,7 +22,6 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [state, dispatch] = useReducer(productReducer, initialState);
-  
 
   // console.log(state);
 
@@ -30,7 +29,11 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
   const [menuValue, setMenuValue] = useState("");
-  const [filterProducts, setFilterProducts] = useState([])
+  const [filterProducts, setFilterProducts] = useState([]);
+  const [sub_category, setSub_Category] = useState([]);
+  const [filterSub_Category ,setFilterSub_Category] = useState('')
+
+
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });
@@ -45,24 +48,47 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-
-   
-
   useEffect(() => {
-    // const value= state.products.map(single => single.category == menuValue)
-    // console.log(value);
-    // if (state?.products.category == menuValue) {
-      
-    // } else {
-    //   console.log(false);
-    // }
-
-    let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
-
-   setFilterProducts(xyzProduct);
-
-    console.log(xyzProduct);
+    let xyzProduct = state?.products.filter(
+      (matchingProduct) => matchingProduct?.category === menuValue
+    );
+  
+    const subCategoriesArray = xyzProduct.map(product => product.sub_category);
+    console.log(54, subCategoriesArray);
+    const uniqueSubCategories = new Set(subCategoriesArray);
+    const uniqueSubCategoriesArray = Array.from(uniqueSubCategories);
+    console.log(57, uniqueSubCategoriesArray);
+  
+    // Set the state, but don't log it here
+    setFilterProducts(xyzProduct);
+    setSub_Category(uniqueSubCategoriesArray);
+    
   }, [menuValue]);
+
+  useEffect(()=>{
+    let product = state?.products.filter(
+      (matchingProduct) => matchingProduct?.sub_category === filterSub_Category
+    );
+    setFilterProducts(product);
+    console.log(67, product)
+  },[filterSub_Category])
+
+
+
+  let scrollToProductSection = () => {
+    const productSection = document.getElementById("product-section");
+    if (productSection) {
+      productSection.scrollIntoView({ behavior: "smooth" });
+
+    }
+  };
+  
+  
+  // useEffect(() => {
+  //   // Log the updated subSection state here
+  //   console.log(66, sub_category);
+  // }, [sub_category]);
+
 
   // useEffect(() => {
   //   const dataFunction = async () => {
@@ -108,7 +134,6 @@ const AuthProvider = ({ children }) => {
     return signInWithPopup(auth, provider);
   };
 
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
@@ -134,6 +159,9 @@ const AuthProvider = ({ children }) => {
     menuValue,
     setMenuValue,
     filterProducts,
+    sub_category,
+    setFilterSub_Category,
+    scrollToProductSection,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

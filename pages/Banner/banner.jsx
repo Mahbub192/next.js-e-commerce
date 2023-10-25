@@ -84,7 +84,7 @@ const categories = [
 const Banner = () => {
 
 
-  const {menuValue, setMenuValue} = useContext(AuthContext)
+  const {menuValue, setMenuValue, scrollToProductSection} = useContext(AuthContext)
   // useEffect(() => {
   //   const allData = async () => {
   //     const res = await fetch("../../data/Categories.json");
@@ -99,9 +99,10 @@ const Banner = () => {
 
 
   // handle Menu Button
-  const handleMenu = (menu) =>{
+  const handleMenu = (menu) => {
     setMenuValue(menu);
-  }
+    scrollToProductSection(); // Invoke scrollToProductSection here
+  };
 
   return (
     <div className="mx-auto container mt-10 ">
