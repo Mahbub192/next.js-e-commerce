@@ -54,10 +54,8 @@ const AuthProvider = ({ children }) => {
     );
   
     const subCategoriesArray = xyzProduct.map(product => product.sub_category);
-    console.log(54, subCategoriesArray);
     const uniqueSubCategories = new Set(subCategoriesArray);
     const uniqueSubCategoriesArray = Array.from(uniqueSubCategories);
-    console.log(57, uniqueSubCategoriesArray);
   
     // Set the state, but don't log it here
     setFilterProducts(xyzProduct);
