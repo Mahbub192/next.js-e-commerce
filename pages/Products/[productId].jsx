@@ -9,9 +9,11 @@ import { useRouter } from "next/router";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 const ProductDetails = ({ item }) => {
-  const { user } = useContext(AuthContext);
+  const {
+    user,setReviewId,
+    state: { products, error, loading },
+  } = useContext(AuthContext);
   const [ImageChange, setImageChange] = useState(null)
-  const router = useRouter();
   let email = user?.email;
   const [counter, setCounter] = useState(0);
 
@@ -35,6 +37,7 @@ const ProductDetails = ({ item }) => {
   const handelImage = (image) =>{
     setImageChange(image)
   }
+  let id = item?._id;
 
   const handelBuyButton = async (item) => {
     const {
@@ -64,6 +67,7 @@ const ProductDetails = ({ item }) => {
       thumbnail,
       images,
       formattedDate,
+      quantity: counter,
     };
     const response = await fetch(`/api/buyProduct`, {
       method: "POST",
@@ -268,6 +272,8 @@ const ProductDetails = ({ item }) => {
                       className={
                         selected ? "text-blue-700 underline" : "text-gray-700"
                       }
+                      onClick={()=>setReviewId(id)}
+
                     >
                       REVIEWS (1)
                     </button>
