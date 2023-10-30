@@ -1,13 +1,13 @@
-import { useState } from "react";
-import Banner from "./Banner/banner";
-import Navbar from "./Shared/navbar";
+// index.js
+import React from "react";
 import Header from "./Shared/header";
+import Navbar from "./Shared/navbar";
+import Banner from "./Banner/banner";
 import Equipment from "./Equipment/Equipment";
 import Add from "./Add/add";
 import Footer from "./Shared/Footer";
 import Brand from "./componants/Brand";
 import MostSell from "./componants/MostSell/MostSell";
-import DashboardLayout from "@/pages/Layouts/DashboardLayout";
 import ProductSection from "./componants/ProductSection";
 
 const index = () => {
@@ -17,8 +17,11 @@ const index = () => {
       <Navbar />
       <Banner />
       <Equipment />
-      <Add></Add>
-      <ProductSection />
+      <Add />
+      <div id="product-section" >
+      <ProductSection/>  {/* Use className here */}
+      </div>
+      
       <Brand />
       <MostSell />
       <Footer />

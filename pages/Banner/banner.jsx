@@ -95,7 +95,7 @@ const categories = [
 const Banner = () => {
 
 
-  const {menuValue, setMenuValue} = useContext(AuthContext)
+  const {menuValue, setMenuValue, scrollToProductSection} = useContext(AuthContext)
   // useEffect(() => {
 
   //   const allData = async () => {
@@ -110,12 +110,12 @@ const Banner = () => {
 
 
 
-  // handle Menu Button
   
-  
-  const handleMenu = (menu) =>{
+
+  const handleMenu = (menu) => {
     setMenuValue(menu);
-  }
+    scrollToProductSection(); // Invoke scrollToProductSection here
+  };
 
 
 
