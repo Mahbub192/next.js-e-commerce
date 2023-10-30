@@ -9,6 +9,7 @@ const cart = () => {
   } = useContext(AuthContext);
   // const scart=cart[0];
   // console.log(scart);
+  console.log(12, cart)
 
   let content;
 
@@ -20,9 +21,9 @@ const cart = () => {
   }
   if (!loading && !error && cart.length) {
     return <>
-        <div className="overflow-x-auto min-h-max">
+        {/* <div className="overflow-x-auto min-h-max">
         <table className="table">
-          {/* head */}
+          
           <thead >
             <tr className=" ml-20">
               <th>Image</th>
@@ -42,7 +43,7 @@ const cart = () => {
             }
           </tbody>
         </table>
-      </div>
+      </div> */}
     </>
     
       

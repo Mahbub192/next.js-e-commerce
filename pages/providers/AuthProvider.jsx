@@ -21,7 +21,34 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+  const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(productReducer, initialState);
+
+  function flattenArray(arr) {
+    return arr.reduce((acc, item) => {
+      if (Array.isArray(item)) {
+        return [...acc, ...flattenArray(item)];
+      } else {
+        return [...acc, item];
+      }
+    }, []);
+  }
+  // console.log(27, state);
+  useEffect(() => {
+    const cartData = localStorage.getItem("cartData");
+    // console.log(30, JSON.parse(cartData))
+    if (cartData) {
+      dispatch({ type: actionTypes.ADD_TO_CARD, payload: JSON.parse(cartData) });
+      const flattenedArray = flattenArray(JSON.parse(cartData));
+      console.log(43, flattenedArray)
+    }
+  }, [dispatch]);
+
+  // Save the cart to local storage when it changes
+  useEffect(() => {
+    localStorage.setItem("cartData", JSON.stringify(state.cart));
+  }, [state.cart]);
+
 
   // console.log(state);
 
@@ -31,10 +58,11 @@ const AuthProvider = ({ children }) => {
   const [menuValue, setMenuValue] = useState("");
   const [filterProducts, setFilterProducts] = useState([]);
   const [sub_category, setSub_Category] = useState([]);
-  const [filterSub_Category ,setFilterSub_Category] = useState('')
-  const [reviewId, setReviewId] = useState()
+  const [filterSub_Category, setFilterSub_Category] = useState("");
+  const [reviewId, setReviewId] = useState();
 
   // console.log(37, reviewId)
+
 
 
 
@@ -55,41 +83,37 @@ const AuthProvider = ({ children }) => {
     let xyzProduct = state?.products.filter(
       (matchingProduct) => matchingProduct?.category === menuValue
     );
-  
-    const subCategoriesArray = xyzProduct.map(product => product.sub_category);
+
+    const subCategoriesArray = xyzProduct.map(
+      (product) => product.sub_category
+    );
     const uniqueSubCategories = new Set(subCategoriesArray);
     const uniqueSubCategoriesArray = Array.from(uniqueSubCategories);
-  
+
     // Set the state, but don't log it here
     setFilterProducts(xyzProduct);
     setSub_Category(uniqueSubCategoriesArray);
-    
   }, [menuValue]);
 
-  useEffect(()=>{
+  useEffect(() => {
     let product = state?.products.filter(
       (matchingProduct) => matchingProduct?.sub_category === filterSub_Category
     );
     setFilterProducts(product);
-    console.log(67, product)
-  },[filterSub_Category])
-
-
+    console.log(67, product);
+  }, [filterSub_Category]);
 
   let scrollToProductSection = () => {
     const productSection = document.getElementById("product-section");
     if (productSection) {
       productSection.scrollIntoView({ behavior: "smooth" });
-
     }
   };
-  
-  
+
   // useEffect(() => {
   //   // Log the updated subSection state here
   //   console.log(66, sub_category);
   // }, [sub_category]);
-
 
   // useEffect(() => {
   //   const dataFunction = async () => {
@@ -164,7 +188,7 @@ const AuthProvider = ({ children }) => {
     setFilterSub_Category,
     scrollToProductSection,
     setReviewId,
-    reviewId
+    reviewId,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
