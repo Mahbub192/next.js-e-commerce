@@ -32,6 +32,9 @@ const AuthProvider = ({ children }) => {
   const [filterProducts, setFilterProducts] = useState([]);
   const [sub_category, setSub_Category] = useState([]);
   const [filterSub_Category ,setFilterSub_Category] = useState('')
+  const [reviewId, setReviewId] = useState()
+
+  // console.log(37, reviewId)
 
 
 
@@ -166,6 +169,8 @@ const AuthProvider = ({ children }) => {
     sub_category,
     setFilterSub_Category,
     scrollToProductSection,
+    setReviewId,
+    reviewId
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
