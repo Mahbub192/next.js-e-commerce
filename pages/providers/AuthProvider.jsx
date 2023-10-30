@@ -74,6 +74,12 @@ const AuthProvider = ({ children }) => {
   },[filterSub_Category])
 
 
+  useEffect(() => {
+  let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
+   setFilterProducts(xyzProduct);
+  }, [menuValue]);
+
+
 
   let scrollToProductSection = () => {
     const productSection = document.getElementById("product-section");

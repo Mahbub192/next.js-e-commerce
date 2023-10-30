@@ -16,6 +16,7 @@ import { IoMdShirt } from "react-icons/io";
 import { AiTwotoneCar } from "react-icons/ai";
 import { LuBaby } from "react-icons/lu";
 import { BiCategory } from "react-icons/bi";
+import { FaShoppingBasket } from "react-icons/fa";
 
 // Import Swiper styles
 import "swiper/css";
@@ -27,6 +28,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import RoundCard from "../componants/RoundCard";
 import RightSideBar from "../componants/RightSideBar";
 import { AuthContext } from "../providers/AuthProvider";
+import { Link } from 'react-scroll';
 
 const categories = [
   {
@@ -79,13 +81,23 @@ const categories = [
     name: "All Categories",
     icon: <BiCategory></BiCategory>,
   },
+  {
+    id: "11",
+    name: "Daily Needs",
+    icon: <FaShoppingBasket></FaShoppingBasket>
+  },
 ];
+
+
+
+
 
 const Banner = () => {
 
 
   const {menuValue, setMenuValue, scrollToProductSection} = useContext(AuthContext)
   // useEffect(() => {
+
   //   const allData = async () => {
   //     const res = await fetch("../../data/Categories.json");
   //     const data = await res.json();
@@ -98,11 +110,19 @@ const Banner = () => {
 
 
 
-  // handle Menu Button
   const handleMenu = (menu) => {
+
     setMenuValue(menu);
     scrollToProductSection(); // Invoke scrollToProductSection here
   };
+
+
+
+
+
+
+
+
 
   return (
     <div className="mx-auto container mt-10 ">
@@ -119,6 +139,7 @@ const Banner = () => {
               <ul className="menu p-4 w-96  min-h-full bg-white rounded-lg text-base-content">
                 {/* Sidebar content here */}
 
+
                 <div className="flex justify-between">
                   <h2 className="font-bold text-xl text-accent">
                     All Categories
@@ -127,14 +148,14 @@ const Banner = () => {
                 </div>
 
                 {categories.map((category) => {
-                 
                   return (
-                    <li key={category.id} onClick={()=>handleMenu (category?.name)}>
-                      <a className="font-semibold text-base	">
-                        {" "}
-                        {category?.icon} {category?.name}
-                      </a>
+              
+                    <li key={category.id}>
+                    <a className="font-semibold text-base" onClick={()=>handleMenu(category?.name)}>{category?.icon} {category?.name}
+                    </a>
                     </li>
+           
+                  
                   );
                 })}
               </ul>
