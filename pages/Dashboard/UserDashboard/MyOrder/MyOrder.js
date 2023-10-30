@@ -35,8 +35,8 @@ const MyOrder = () => {
               <th>Order Date</th>
               <th>Quantity</th>              
               <th>Product Information </th>
+              <th>Rating</th>
               <th>Review</th>
-              <th>Fide back</th>
               <th></th>
             </tr>
           </thead>
