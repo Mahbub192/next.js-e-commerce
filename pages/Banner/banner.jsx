@@ -107,21 +107,11 @@ const Banner = () => {
   // }, []);
 
 
-
-
-
-  
-
   const handleMenu = (menu) => {
+
     setMenuValue(menu);
     scrollToProductSection(); // Invoke scrollToProductSection here
   };
-
-
-
-
-
-
 
 
 

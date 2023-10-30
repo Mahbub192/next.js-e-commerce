@@ -27,6 +27,7 @@ const cart = () => {
             <tr className=" ml-20">
               <th>Image</th>
               <th>Name</th>
+              <th></th>
               <th>Price</th>
               <th>Action</th>
             </tr>
@@ -40,8 +41,16 @@ const cart = () => {
                 ></SingleAddCart>
               )))
             }
+             <div>
+             
+             </div>
           </tbody>
         </table>
+        <div className="divider">
+       
+
+</div>
+<button className="btn btn-accent right-0">CheckOut</button>
       </div>
     </>
     

@@ -9,7 +9,6 @@ import "react-tabs/style/react-tabs.css";
 const ProductPage = () => {
 
 
-
   const {
     filterProducts,sub_category,setFilterSub_Category,handleAppProduct,
     state: { products, error, loading },
@@ -24,7 +23,6 @@ const ProductPage = () => {
     ssr: false,
   });
 
-  console.log(23, sub_category)
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };

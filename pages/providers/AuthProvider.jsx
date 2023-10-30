@@ -21,9 +21,10 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
+
+
   const [state, dispatch] = useReducer(productReducer, initialState);
 
-  // console.log(state);
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -55,10 +56,11 @@ const AuthProvider = ({ children }) => {
     );
   
     const subCategoriesArray = xyzProduct.map(product => product.sub_category);
-    console.log(54, subCategoriesArray);
+   
     const uniqueSubCategories = new Set(subCategoriesArray);
+
     const uniqueSubCategoriesArray = Array.from(uniqueSubCategories);
-    console.log(57, uniqueSubCategoriesArray);
+    
   
     // Set the state, but don't log it here
     setFilterProducts(xyzProduct);
@@ -73,6 +75,12 @@ const AuthProvider = ({ children }) => {
     setFilterProducts(product);
     console.log(67, product)
   },[filterSub_Category])
+
+
+  useEffect(() => {
+  let xyzProduct  =state?.products.filter(matchingProduct=>matchingProduct?.category===menuValue)
+   setFilterProducts(xyzProduct);
+  }, [menuValue]);
 
 
 
