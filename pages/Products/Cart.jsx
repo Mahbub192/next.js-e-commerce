@@ -4,11 +4,9 @@ import { AuthContext } from "../providers/AuthProvider";
 import SingleAddCart from "./SingleAddCart";
 
 const cart = () => {
-  const {
-    state: { cart, error, loading },
-  } = useContext(AuthContext);
+  const { state: { cart, error, loading },} = useContext(AuthContext);
   // const scart=cart[0];
-  // console.log(scart);
+  console.log(9,cart);
 
   let content;
 
@@ -36,6 +34,7 @@ const cart = () => {
             {
               (content = cart.map((product) => (
                 <SingleAddCart
+                
                   key={product._id}
                   scart={product}
                 ></SingleAddCart>
@@ -50,7 +49,7 @@ const cart = () => {
        
 
 </div>
-<button className="btn btn-accent right-0">CheckOut</button>
+<button className="btn btn-accent ">CheckOut</button>
       </div>
     </>
     

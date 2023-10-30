@@ -35,9 +35,13 @@ const AuthProvider = ({ children }) => {
   const [filterSub_Category ,setFilterSub_Category] = useState('')
   const [reviewId, setReviewId] = useState()
 
-  // console.log(37, reviewId)
+  console.log(3 , state.cart)
 
+useEffect(()=>{
 
+  localStorage.setItem("cartData",JSON.stringify(state.cart))
+
+},[state.cart])
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });

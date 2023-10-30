@@ -1,7 +1,7 @@
 import React from "react";
 
 const SingleAddCart = ({ scart }) => {
-  console.log(scart);
+  // console.log(scart);
   return (
     <tr>
       <td>
