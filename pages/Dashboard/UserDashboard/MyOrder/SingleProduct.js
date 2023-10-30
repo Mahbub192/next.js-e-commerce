@@ -2,13 +2,17 @@ import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import StarsRating from "./StarsRating";
 import { AuthContext } from "@/pages/providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const SingleProduct = (item) => {
-  const { user,loading } = useContext(AuthContext);
+  const {user,
+    state: { products, error, loading },
+  } = useContext(AuthContext);  
   const [modalVisible, setModalVisible] = useState(false);
   const [modalFromVisible, setModalFromVisible] = useState(false);
   const [starsRatingValue, setStarsRatingValue] = useState();
   const [productId, setProductId] = useState();
+  const [reviewButton, setReviewButton] = useState(false);
   const {
     register,
     handleSubmit,
@@ -44,17 +48,32 @@ const SingleProduct = (item) => {
     setModalFromVisible(false);
   };
 
-
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const productReview = {
-      review : data?.review, 
-      rating : starsRatingValue,
+      review: data?.review,
+      rating: starsRatingValue,
       productId,
-      userImage: user?.photoURL , 
-      userName: user?.displayName
+      email: user?.email,
+      userImage: user?.photoURL,
+      userName: user?.displayName,
+    };
+    const response = await fetch(`api/server`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(productReview),
+    });
+    if (response.ok) {
+      Swal.fire({
+        icon: "success",
+        title: "Your review add successfully.",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setReviewButton(true);
+      closeReviewModal(); // Close the review modal after submission
     }
-    console.log(productReview); // You can handle the review submission here with productId
-    closeReviewModal(); // Close the review modal after submission
   };
 
   return (
@@ -83,6 +102,7 @@ const SingleProduct = (item) => {
           <button
             className="px-2 py-2 bg-orange-200 rounded-xl"
             onClick={() => showReviewModal(id)}
+            disabled={reviewButton ? true : false}
           >
             Review
           </button>
@@ -149,7 +169,7 @@ const SingleProduct = (item) => {
                 </span>
               </div>
               <input
-                className="border-2 py-1 px-4 text-lg mt-5 bg-blue-400 text-white"
+                className="border-2 py-1 px-4 text-lg mt-5 bg-blue-400 text-white cursor-pointer"
                 type="submit"
               />
             </form>
