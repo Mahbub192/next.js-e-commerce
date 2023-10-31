@@ -4,7 +4,8 @@ import { AuthContext } from "../providers/AuthProvider";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 
 const Navbar = () => {
-  const { user, logOut, state: {cart}} = useContext(AuthContext);
+  const { user, logOut, localStorageData, state: {cart}} = useContext(AuthContext);
+  console.log("localStorageData", localStorageData)
 
   return (
     <div>
@@ -81,7 +82,7 @@ const Navbar = () => {
 
 
             <div className="indicator relative">
-              <span className="indicator-item badge badge-secondary absolute top-1 right-2">{cart.length}</span>
+              <span className="indicator-item badge badge-secondary absolute top-1 right-2">{localStorageData?.length }</span>
               <li>
                 <Link href="/Products/Cart">
                   <ShoppingCartOutlined className="text-2xl ml-3 " />
