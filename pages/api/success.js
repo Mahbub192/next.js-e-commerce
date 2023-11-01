@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import { connectToDatabase } from "./mongo";
-import { NextResponse } from "next/server";
+import { NextResponse } from "next";
+
 
 async function success(req, res) {
   try {
@@ -32,3 +33,5 @@ async function success(req, res) {
 }
 
 export default success;
+
+

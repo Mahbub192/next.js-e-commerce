@@ -22,7 +22,7 @@ const RightSideBar = () => {
           products
             .filter((singleProduct) => singleProduct.rating >= 4.5)
             .map((singleProduct) => (
-              <>
+              <div key={singleProduct._id}>
                 <div
                   key={singleProduct._id}
                   className="flex mt-3 bg-gray-200 p-3 items-center gap-5"
@@ -59,7 +59,7 @@ const RightSideBar = () => {
                     </Link>
                   </div>
                 </div>
-              </>
+              </div>
             ))}
       </div>
     </div>
