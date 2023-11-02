@@ -7,7 +7,6 @@ import toast, { Toaster } from 'react-hot-toast';
 const notify = () => toast('Here is your toast.');
 
 const Product = ({ product }) => {
-  const { title, price, rating, image, _id } = product;
 
   const { dispatch } = useContext(AuthContext);
 
@@ -16,7 +15,7 @@ const Product = ({ product }) => {
       <div className=" overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800">
         <div className="px-4 py-2">
           <h1 className="text-xl font-semibold text-gray-800  dark:text-white">
-            {title?.slice(0, 20)}
+            {product?.title?.slice(0, 20)}
           </h1>
         </div>
 
@@ -62,13 +61,13 @@ const Product = ({ product }) => {
           >
             <path d="M12 17.27L18.18 21L16.54 13.97L22 9.24L14.81 8.63L12 2L9.19 8.63L2 9.24L7.46 13.97L5.82 21L12 17.27Z" />
           </svg>
-          <p className="text-gray-500 pl-4 text-sm">{rating}</p>
+          <p className="text-gray-500 pl-4 text-sm">{product?.rating}</p>
         </div>
 
         <div className="flex items-center justify-between px-4 py-2 bg-accent">
-          <h1 className="text-lg font-bold text-white">$ {price}</h1>
+          <h1 className="text-lg font-bold text-white">$ {product?.price}</h1>
 
-          <Link href={`/Products/${_id}`}>
+          <Link href={`/Products/${product?._id}`}>
             <button className="btn btn-xs  btn-primary text-white">
               Buy Now
             </button>

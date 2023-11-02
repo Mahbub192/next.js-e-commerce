@@ -6,7 +6,7 @@ const SingleAddCart = ({ scart }) => {
     <tr>
       <td>
         <div className="flex items-center space-x-3  ">
-          <div className="avatar  ml-20">
+          <div className="avatar  ">
             <div className="mask mask-squircle w-20 h-20">
               <img
                 src={scart.thumbnail}
