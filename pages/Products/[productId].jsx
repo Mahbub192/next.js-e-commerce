@@ -7,12 +7,16 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../providers/AuthProvider";
 import { useRouter } from "next/router";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { actionTypes } from "../states/productState/ActionTypes";
+import Product from "./Product";
 
 const ProductDetails = ({ item }) => {
-  const {
-    user,setReviewId,
-    state: { products, error, loading },
-  } = useContext(AuthContext);
+  const { dispatch   } = useContext(AuthContext);
+
+  const { user,setReviewId,  state: { products, error, loading }} = useContext(AuthContext);
+
+
+  
   const [ImageChange, setImageChange] = useState(null)
   let email = user?.email;
   const [counter, setCounter] = useState(0);
@@ -239,13 +243,16 @@ const ProductDetails = ({ item }) => {
                 {user?.email && (
                   <button
                     onClick={() => handelBuyButton(item)}
-                    className="btn text-white btn-info mr-2"
+                    className="btn text-white btn-accent mr-2"
                   >
                     BUY NOW
                   </button>
                 )}
               </Link>
-              <button className="btn text-white btn-info">ADD TO CART</button>
+              <button onClick={() =>
+              dispatch({ type: actionTypes.ADD_TO_CARD, payload: Product } )
+            }
+        className="btn text-white btn-secondary">ADD TO CART</button>
             </div>
           </div>
         </div>

@@ -21,8 +21,8 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(productReducer, initialState);
+  
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
@@ -34,50 +34,82 @@ const AuthProvider = ({ children }) => {
   const [localStorageData , setLocalStorageData]  = useState()
   
 
-  // function flattenArray(arr) {
-  //   return arr.reduce((acc, item) => {
-  //     if (Array.isArray(item)) {
-  //       return [...acc, ...flattenArray(item)];
-  //     } else {
-  //       return [...acc, item];
-  //     }
-  //   }, []);
-  // }
-  // console.log(27, state);
+
+//  console.log(10,state.cart);
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ // Save the cart to local storage when it changes
+ 
+ 
+//  const filterAddCart=(id)=>{
+
+//   const cartData = localStorage.getItem("cartData");
+//     if (cartData) {
+//       // If there is cart data in local storage, update both the state and local storage data
+//       const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
+//       dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
+//       setLocalStorageData(flattenedCartData);
+//       console.log(11,cartData);
+
+//     }
+
+//     const flattenedCartData = state.cart.flat();
+//     localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
+//     setLocalStorageData(flattenedCartData); // Update localStorageData with the latest cart data
+
+
+//  }
+ 
+useEffect(() => {
+  const cartData = localStorage.getItem("cartData");
+  if (cartData) {
+    // If there is cart data in local storage, update both the state and local storage data
+    const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
+    dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
+    setLocalStorageData(flattenedCartData);
+  }
+}, [dispatch]);
+
+
+useEffect(() => {
+  // Flatten the cart data before saving it to local storage
+  console.log(77, state.cart);
+  const flattenedCartData = state.cart.flat();
+  console.log(79, flattenedCartData);
+  // console.log("last array", (flattenedCartData[flattenedCartData.length - 1])._id);
+  const xyz= flattenedCartData.filter(singleProduct => singleProduct._id !== (flattenedCartData[flattenedCartData.length - 1])._id)
+  // console.log(80, xyz);
+  // state.cart=xyz
+  console.log(flattenedCartData);
+  localStorage.setItem("cartData", JSON.stringify(xyz));
+  setLocalStorageData(xyz); // Update localStorageData with the latest cart data
+}, [state.cart]);
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
   // useEffect(() => {
   //   const cartData = localStorage.getItem("cartData");
-  //   // console.log(30, JSON.parse(cartData))
   //   if (cartData) {
-  //     dispatch({ type: actionTypes.ADD_TO_CARD, payload: JSON.parse(cartData) });
-  //    let  flattenedArray = flattenArray(JSON.parse(cartData));
-  //     console.log(52, flattenedArray)
-  //     setLocalStorageData(flattenedArray)
+  //     // If there is cart data in local storage, update both the state and local storage data
+  //     const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
+  //     dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
+  //     setLocalStorageData(flattenedCartData);
   //   }
   // }, [dispatch]);
-
-
-  // Save the cart to local storage when it changes
+  
+  
   // useEffect(() => {
-  //   localStorage.setItem("cartData", JSON.stringify(state.cart));
+  //   // Flatten the cart data before saving it to local storage
+  //   const flattenedCartData = state.cart.flat();
+  //   console.log(flattenedCartData);
+  //   localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
+  //   setLocalStorageData(flattenedCartData); // Update localStorageData with the latest cart data
   // }, [state.cart]);
 
-  useEffect(() => {
-    const cartData = localStorage.getItem("cartData");
-    if (cartData) {
-      // If there is cart data in local storage, update both the state and local storage data
-      const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
-      dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
-      setLocalStorageData(flattenedCartData);
-    }
-  }, [dispatch]);
-  
-  // Save the cart to local storage when it changes
-  useEffect(() => {
-    // Flatten the cart data before saving it to local storage
-    const flattenedCartData = state.cart.flat();
-    localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
-    setLocalStorageData(flattenedCartData); // Update localStorageData with the latest cart data
-  }, [state.cart]);
+
+
 
 
   useEffect(() => {
@@ -114,8 +146,21 @@ const AuthProvider = ({ children }) => {
       (matchingProduct) => matchingProduct?.sub_category === filterSub_Category
     );
     setFilterProducts(product);
-    console.log(67, product);
+    // console.log(67, product);
   }, [filterSub_Category]);
+
+
+
+
+
+  const removeFromCart = (id) => {
+    const data=localStorage.getItem("cartData");
+    const ArrayData=JSON.parse(data)
+    const updatedCart =ArrayData.filter((product) => product?._id !== id);
+    state.cart=updatedCart;
+    setLocalStorageData(updatedCart);
+  };
+
 
   let scrollToProductSection = () => {
     const productSection = document.getElementById("product-section");
@@ -185,6 +230,7 @@ const AuthProvider = ({ children }) => {
     setReviewId,
     reviewId,
     localStorageData,
+    removeFromCart,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

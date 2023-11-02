@@ -9,7 +9,7 @@ const notify = () => toast('Here is your toast.');
 const Product = ({ product }) => {
   const { title, price, rating, image, _id } = product;
 
-  const { dispatch } = useContext(AuthContext);
+  const { dispatch ,filterAddCart} = useContext(AuthContext);
 
   return (
     <div>
@@ -75,10 +75,11 @@ const Product = ({ product }) => {
           </Link>
 
           <button
-            onClick={() =>
+            onClick={() =>{
+              // filterAddCart(_id);
               dispatch({ type: actionTypes.ADD_TO_CARD, payload: product } )
             }
-       
+            }
             className="btn btn-xs  btn-primary text-white"
           >
             Add To Cart
