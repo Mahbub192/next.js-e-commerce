@@ -14,14 +14,16 @@ import SellProducts from "./UserDashboard/SellProducts/SellProducts";
 import AddProducts from "./AdminDashboard/AddProducts/AddProducts";
 import MyOrder from "./UserDashboard/MyOrder/MyOrder";
 import Link from "next/link";
+import SellingProductUpdate from "./UserDashboard/SellingProductUpdate/SellingProductUpdate";
+import ProductsStatusChange from "./AdminDashboard/ProductsStatusChange/ProductsStatusChange";
 
 const { Sider, Content } = Layout;
 
 const DashboardLayout = () => {
   // Get user data from the AuthContext
   const { user } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isUser, setIsUser] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(true);
+  const [isUser, setIsUser] = useState(false);
 
   const [content, setContent] = useState(
     isAdmin ? <AdminDashboard /> : <UserDashboard />
@@ -41,12 +43,15 @@ const DashboardLayout = () => {
     } else if (key === "4") {
       // Display All Users content
       setContent(isAdmin ? <AddProducts /> : <MyOrder />);
+    } else if (key === "5") {
+      // Display All Users content
+      setContent(isAdmin ? <ProductsStatusChange /> : <SellingProductUpdate />);
     }
   };
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Sider width={200} theme="dark" collapsible>
+      <Sider width={250} theme="dark" collapsible>
         <div className="logo" />
 
         <div className="text-center">
@@ -76,6 +81,9 @@ const DashboardLayout = () => {
             <Menu.Item key="4" onClick={() => handleMenuClick("4")}>
               Add Products
             </Menu.Item>
+            <Menu.Item key="5" onClick={() => handleMenuClick("5")}>
+              Product Status Change
+            </Menu.Item>
           </Menu>
         ) : (
           <Menu theme="dark" defaultSelectedKeys={["1"]} mode="vertical">
@@ -103,7 +111,7 @@ const DashboardLayout = () => {
                 <span className="pl-5">Sell Products</span>
               </p>
             </Menu.Item>
-            <Menu.Item key="" onClick={() => handleMenuClick("4")}>
+            <Menu.Item key="4" onClick={() => handleMenuClick("4")}>
               <p className="flex items-center">
                 <span className="text-2xl">
                   <FaTableList />
@@ -111,7 +119,16 @@ const DashboardLayout = () => {
                 <span className="pl-5">My Orders</span>
               </p>
             </Menu.Item>
+            <Menu.Item key="5" onClick={() => handleMenuClick("5")}>
+              <p className="flex items-center">
+                <span className="text-2xl">
+                  <FaTableList />
+                </span>
+                <span className="pl-5">Selling Product Update</span>
+              </p>
+            </Menu.Item>
           </Menu>
+          
         )}
         <div className="divider"></div>
         <Menu>

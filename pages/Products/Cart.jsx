@@ -7,8 +7,6 @@ const cart = () => {
   const {
     localStorageData, removeFromCart, state: { cart, error, loading },
   } = useContext(AuthContext);
-  // const scart=cart[0];
-  // console.log(scart)
   
   const price = localStorageData?.map(price => price?.price)
   const total = price?.reduce((acc, price) => acc + price, 0);

@@ -28,6 +28,7 @@ const SellProducts = () => {
 
   const onSubmit = async (data) => {
     const productInfo = {
+      email: user?.email,
       productName: data.name,
       shopName: data.shopName,
       location: data.location,
