@@ -32,7 +32,7 @@ const AllUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {allUser.map((item, index) => (
+          {allUser?.map((item, index) => (
             <UserTableRow data={item} index={index}></UserTableRow>
           ))}
         </tbody>

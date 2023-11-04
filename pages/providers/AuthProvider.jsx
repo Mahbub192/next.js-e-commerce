@@ -21,7 +21,6 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(productReducer, initialState);
 
   const [user, setUser] = useState(null);
@@ -32,37 +31,8 @@ const AuthProvider = ({ children }) => {
   const [sub_category, setSub_Category] = useState([]);
   const [filterSub_Category, setFilterSub_Category] = useState("");
   const [reviewId, setReviewId] = useState();
-
   const [localStorageData , setLocalStorageData]  = useState()
-  
 
-
-  // function flattenArray(arr) {
-  //   return arr.reduce((acc, item) => {
-  //     if (Array.isArray(item)) {
-  //       return [...acc, ...flattenArray(item)];
-  //     } else {
-  //       return [...acc, item];
-  //     }
-  //   }, []);
-  // }
-  // console.log(27, state);
-  // useEffect(() => {
-  //   const cartData = localStorage.getItem("cartData");
-  //   // console.log(30, JSON.parse(cartData))
-  //   if (cartData) {
-  //     dispatch({ type: actionTypes.ADD_TO_CARD, payload: JSON.parse(cartData) });
-  //    let  flattenedArray = flattenArray(JSON.parse(cartData));
-  //     console.log(52, flattenedArray)
-  //     setLocalStorageData(flattenedArray)
-  //   }
-  // }, [dispatch]);
-
-
-  // Save the cart to local storage when it changes
-  // useEffect(() => {
-  //   localStorage.setItem("cartData", JSON.stringify(state.cart));
-  // }, [state.cart]);
 
   useEffect(() => {
     const cartData = localStorage.getItem("cartData");
@@ -73,16 +43,13 @@ const AuthProvider = ({ children }) => {
       setLocalStorageData(flattenedCartData);
     }
   }, [dispatch]);
+
   
-  // Save the cart to local storage when it changes
   useEffect(() => {
-    // Flatten the cart data before saving it to local storage
     const flattenedCartData = state.cart.flat();
     localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
-    setLocalStorageData(flattenedCartData); // Update localStorageData with the latest cart data
+    setLocalStorageData(flattenedCartData); 
   }, [state.cart]);
-
-
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });
@@ -118,8 +85,30 @@ const AuthProvider = ({ children }) => {
       (matchingProduct) => matchingProduct?.sub_category === filterSub_Category
     );
     setFilterProducts(product);
-    console.log(67, product);
+    // console.log(67, product);
   }, [filterSub_Category]);
+
+  const removeFromCart = (id) => {
+    const data = localStorage.getItem("cartData");
+    const ArrayData = JSON.parse(data);
+    console.log(59, ArrayData);
+    const index = ArrayData.findIndex((product) => product._id === id);
+
+    if (index !== -1) {
+      // Create a new array by excluding the item at the found index
+      const updatedProducts = [
+        ...ArrayData.slice(0, index),
+        ...ArrayData.slice(index + 1),
+      ];
+      localStorage.setItem("cartData", JSON.stringify(updatedProducts));
+      setLocalStorageData(updatedProducts);
+      console.log(updatedProducts);
+      window.location.replace("http://localhost:3000/Products/Cart");
+    } else {
+      console.log("Nothing");
+    }
+  };
+
 
   let scrollToProductSection = () => {
     const productSection = document.getElementById("product-section");
@@ -190,6 +179,7 @@ const AuthProvider = ({ children }) => {
     setReviewId,
     reviewId,
     localStorageData,
+    removeFromCart,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

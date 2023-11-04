@@ -8,10 +8,7 @@ import "react-tabs/style/react-tabs.css";
 
 const ProductPage = () => {
 
-  const {
-    filterProducts,sub_category,setFilterSub_Category,handleAppProduct,
-    state: { products, error, loading },
-  } = useContext(AuthContext);
+  const { filterProducts,sub_category,setFilterSub_Category,state: { products, error, loading }} = useContext(AuthContext);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(12);
@@ -22,7 +19,7 @@ const ProductPage = () => {
     ssr: false,
   });
 
-  console.log(23, sub_category)
+  // console.log(23, sub_category)
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
