@@ -5,12 +5,14 @@ import SingleAddCart from "./SingleAddCart";
 
 const cart = () => {
   const {
+
     localStorageData, removeFromCart, state: { cart, error, loading },
   } = useContext(AuthContext);
   
   const price = localStorageData?.map(price => price?.price)
   const total = price?.reduce((acc, price) => acc + price, 0);
   // console.log(total)
+
 
   let content;
 
@@ -21,8 +23,10 @@ const cart = () => {
     content = <p>Something went wrong..!</p>;
   }
   if (!loading && !error && cart.length) {
-    return <div className="flex">
+    return (
+      <div className="flex">
         <div className="overflow-x-auto w-3/5 px-10">
+
         <table className="table">
           {/* head */}
           <thead >
@@ -79,11 +83,9 @@ const cart = () => {
        <div className="text-center mt-10">
         <button  className="text-white bg-green-600 px-6 py-3 rounded-lg text-2xl">Payment</button>
        </div>
+
       </div>
-    </div>
-    
-      
-    
+    );
   }
 
   // return <div className="min-h-screen">{content}</div>;

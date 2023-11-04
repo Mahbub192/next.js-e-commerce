@@ -2,7 +2,6 @@ import React from "react";
 
 const UserTableRow = ({ data, index }) => {
   const { _id, image, name, email, phoneNumber } = data;
-  console.log(data);
   return (
     <tr>
       <th>{index}</th>

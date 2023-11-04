@@ -31,7 +31,7 @@ const AuthProvider = ({ children }) => {
   const [sub_category, setSub_Category] = useState([]);
   const [filterSub_Category, setFilterSub_Category] = useState("");
   const [reviewId, setReviewId] = useState();
-  const [localStorageData, setLocalStorageData] = useState();
+  const [localStorageData , setLocalStorageData]  = useState()
 
 
   useEffect(() => {
@@ -50,25 +50,6 @@ const AuthProvider = ({ children }) => {
     localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
     setLocalStorageData(flattenedCartData); 
   }, [state.cart]);
-
-
-  // useEffect(() => {
-  //   const cartData = localStorage.getItem("cartData");
-  //   if (cartData) {
-  //     // If there is cart data in local storage, update both the state and local storage data
-  //     const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
-  //     dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
-  //     setLocalStorageData(flattenedCartData);
-  //   }
-  // }, [dispatch]);
-
-  // useEffect(() => {
-  //   // Flatten the cart data before saving it to local storage
-  //   const flattenedCartData = state.cart.flat();
-  //   console.log(flattenedCartData);
-  //   localStorage.setItem("cartData", JSON.stringify(flattenedCartData));
-  //   setLocalStorageData(flattenedCartData); // Update localStorageData with the latest cart data
-  // }, [state.cart]);
 
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });
@@ -135,6 +116,7 @@ const AuthProvider = ({ children }) => {
       productSection.scrollIntoView({ behavior: "smooth" });
     }
   };
+
 
   const provider = new GoogleAuthProvider();
 
