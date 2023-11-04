@@ -66,7 +66,7 @@ useEffect(() => {
   if (cartData) {
     // If there is cart data in local storage, update both the state and local storage data
     const flattenedCartData = JSON.parse(cartData).flat(); // Flatten the array
-    dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
+    // dispatch({ type: actionTypes.ADD_TO_CARD, payload: flattenedCartData });
     setLocalStorageData(flattenedCartData);
   }
 }, [dispatch]);
@@ -74,7 +74,7 @@ useEffect(() => {
 
 useEffect(() => {
   // Flatten the cart data before saving it to local storage
-  console.log(77, state.cart);
+  // console.log(77, state.cart);
   const flattenedCartData = state.cart.flat();
   console.log(79, flattenedCartData);
   // console.log("last array", (flattenedCartData[flattenedCartData.length - 1])._id);
