@@ -22,8 +22,8 @@ const { Sider, Content } = Layout;
 const DashboardLayout = () => {
   // Get user data from the AuthContext
   const { user } = useContext(AuthContext);
-  const [isAdmin, setIsAdmin] = useState(true);
-  const [isUser, setIsUser] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isUser, setIsUser] = useState(true);
 
   const [content, setContent] = useState(
     isAdmin ? <AdminDashboard /> : <UserDashboard />

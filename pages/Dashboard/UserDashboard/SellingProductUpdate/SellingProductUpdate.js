@@ -1,10 +1,33 @@
 import { AuthContext } from "@/pages/providers/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import SellProducts from "../SellProducts/SellProducts";
 
 const SellingProductUpdate = () => {
   const { user } = useContext(AuthContext);
   const [product, setProduct] = useState([]);
+  const [modalFromVisible, setModalFromVisible] = useState(false);
+  const [productId, setProductId] = useState()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   let email = user?.email;
+
+
+
+  const showModal = (id) => {
+    setProductId(id)
+    setModalFromVisible(true);
+  };
+
+  const closeFromModal = () => {
+    setModalFromVisible(false);
+  };
+
 
   useEffect(() => {
     fetch(`api/sellProductsAPI?email=${email}`)
@@ -41,19 +64,20 @@ const SellingProductUpdate = () => {
                     <th>
                       <div className="avatar">
                         <div className="w-10 rounded-full">
-                          <img src={singleProduct.imageUrl} />
+                          <img src={singleProduct?.images[0]} />
                         </div>
                       </div>
                     </th>
-                    <td>{singleProduct.productName}</td>
-                    <th>{singleProduct.shopName}</th>
-                    <td >{singleProduct.quantity}</td>
+                    <td>{singleProduct?.title}</td>
+                    <th>{singleProduct?.shopName}</th>
+                    <td >{singleProduct.stock}</td>
                     <th >{singleProduct.date}</th>
                     <td className={singleProduct.status === "pending" ? "bg-red-300" : "bg-green-400"}>{singleProduct.status}</td>
                     <td>...</td>
-                    <td>...</td>
+                    <td>{singleProduct.comment}</td>
                     <td>
-                      <button className="bg-blue-400 py-2 px-3 border-2 text-white font-semibold">Update</button>
+                      <button onClick={()=>showModal(singleProduct._id)} className={singleProduct.status === "pending" ? "bg-blue-400 py-2 px-3 border-2 text-white   font-semibold" : "bg-gray-400 px-3 py-2 border-2 text-white " } 
+                       disabled ={singleProduct.status === "pending" ? false : true}>Update</button>
                     </td>
                   </tr>
                 </>
@@ -61,6 +85,31 @@ const SellingProductUpdate = () => {
           </tbody>
         </table>
       </div>
+      {modalFromVisible && (
+        <dialog className="modal" open>
+          <div className="modal-box w-11/12 max-w-5xl">
+            <h1 className="text-xl font-semibold font-serif mb-10">
+            Update this Product
+            </h1>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
+              <textarea
+                className="textarea textarea-bordered w-full h-32"
+                placeholder="Message"
+                {...register("review", { required: true })}
+              />
+              {errors.review && <span>This field is required</span>}
+              <input
+                className="border-2 py-1 px-4 text-lg mt-5 bg-blue-400 text-white cursor-pointer"
+                type="submit"
+              />
+            </form> */}
+            <SellProducts id={productId} />
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={closeFromModal}>Close</button>
+          </form>
+        </dialog>
+      )}
     </div>
   );
 };

@@ -23,6 +23,7 @@ const auth = getAuth(app);
 const AuthProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [state, dispatch] = useReducer(productReducer, initialState);
+
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [data12, setData12] = useState([]);
@@ -31,8 +32,10 @@ const AuthProvider = ({ children }) => {
   const [sub_category, setSub_Category] = useState([]);
   const [filterSub_Category, setFilterSub_Category] = useState("");
   const [reviewId, setReviewId] = useState();
+
   const [localStorageData , setLocalStorageData]  = useState()
   
+
 
   // function flattenArray(arr) {
   //   return arr.reduce((acc, item) => {
@@ -80,6 +83,7 @@ const AuthProvider = ({ children }) => {
   }, [state.cart]);
 
 
+
   useEffect(() => {
     dispatch({ type: actionTypes.FETCHING_START });
     fetch("/api/server")
@@ -123,6 +127,7 @@ const AuthProvider = ({ children }) => {
       productSection.scrollIntoView({ behavior: "smooth" });
     }
   };
+
 
   const provider = new GoogleAuthProvider();
 

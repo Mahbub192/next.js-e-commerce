@@ -14,7 +14,8 @@ import ImageUploadForm from "./ImageUploadForm";
 import Swal from "sweetalert2";
 import { AuthContext } from "@/pages/providers/AuthProvider";
 
-const SellProducts = () => {
+const SellProducts = (props) => {
+  console.log(18, "props", props)
   const { user } = useContext(AuthContext);
   const [ImageUrl, setImageUrl] = useState([]);
   let email;
@@ -28,16 +29,19 @@ const SellProducts = () => {
 
   const onSubmit = async (data) => {
     const productInfo = {
+      id: props?.id,
       email: user?.email,
-      productName: data.name,
+      productOwnerName: data.name,
       shopName: data.shopName,
+      title: data.productName,
       location: data.location,
       category: data.category,
+      sub_category : data.sub_category,
       phoneNumber: data.phoneNumber,
-      imageUrl: ImageUrl,
-      message: data.message,
+      images: ImageUrl,
+      description: data.message,
       status: "pending",
-      quantity: data.quantity,
+      stock: data.quantity,
     };
     console.log(productInfo);
     const response = await fetch(`api/sellProductsAPI`, {
@@ -64,7 +68,7 @@ const SellProducts = () => {
   }, [user]);
 
   return (
-    <div className="w-3/5 mx-auto bg-white p-10 shadow-2xl">
+    <div className="md:w-4/5 mx-auto bg-white p-10 shadow-2xl">
       <h1 className="text-2xl front-bold">Product Details</h1>
       <form className="mt-5" onSubmit={handleSubmit(onSubmit)}>
         {/* Owner Name  and Shop Name Input filed */}
@@ -112,9 +116,9 @@ const SellProducts = () => {
             </label>
             <input
               type="text"
-              {...register("location", { required: true })}
-              name="location"
-              placeholder="Location"
+              {...register("productName", { required: true })}
+              name="productName"
+              placeholder="Product Name"
               className="input input-bordered"
             />
           </div>
@@ -155,7 +159,7 @@ const SellProducts = () => {
               </span>
             </label>
             <select
-              {...register("sub-category")}
+              {...register("sub_category")}
               className="input input-bordered"
             >
               <option value="Health & Beauty">Health & Beauty</option>
