@@ -28,6 +28,7 @@ async function sellProductsAPI(req, res) {
             // Update various product properties
             date: formattedDate,
             email: req.body.email,
+            price: req.body.price,
             productOwnerName: req.body.productOwnerName,
             shopName: req.body.shopName,
             title: req.body.title,

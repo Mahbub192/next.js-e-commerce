@@ -42,7 +42,7 @@ const DashboardLayout = () => {
       setContent(isAdmin ? <AllUsers /> : <SellProducts />);
     } else if (key === "4") {
       // Display All Users content
-      setContent(isAdmin ? <AddProducts /> : <MyOrder />);
+      setContent(isAdmin ? <SellProducts /> : <MyOrder />);
     } else if (key === "5") {
       // Display All Users content
       setContent(isAdmin ? <ProductsStatusChange /> : <SellingProductUpdate />);
