@@ -2,11 +2,13 @@ import { AuthContext } from "@/pages/providers/AuthProvider";
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import SellProducts from "../SellProducts/SellProducts";
+import LoadingPage from "@/pages/LoadingPage/LoadingPage";
 
 const SellingProductUpdate = () => {
   const { user } = useContext(AuthContext);
   const [product, setProduct] = useState([]);
   const [modalFromVisible, setModalFromVisible] = useState(false);
+  const [loading, setLoading] = useState(true)
   const [productId, setProductId] = useState()
 
   const {
@@ -29,13 +31,29 @@ const SellingProductUpdate = () => {
   };
 
 
+  async function fetchData() {
+    try {
+      const response = await fetch(`api/sellProductsAPI?email=${email}`);
+      const data = await response.json();
+      setProduct(data.data);
+      setLoading(false);
+    } catch (error) {
+      // Handle errors if needed
+      console.error('Error fetching data:', error);
+    }
+  }
+  
   useEffect(() => {
-    fetch(`api/sellProductsAPI?email=${email}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data.data));
+    fetchData();
   }, [email]);
 
   console.log(15, product)
+
+  if(loading){
+    return <div className="">
+      <LoadingPage ></LoadingPage>
+    </div>
+  }
 
   return (
     <div>

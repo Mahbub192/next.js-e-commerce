@@ -1,3 +1,4 @@
+import LoadingPage from "@/pages/LoadingPage/LoadingPage";
 import { AuthContext } from "@/pages/providers/AuthProvider";
 import { Upload } from "antd";
 import React, { useContext, useEffect, useState } from "react";
@@ -8,8 +9,9 @@ import { connect } from "react-redux";
 import Swal from "sweetalert2";
 
 const UserProfile = () => {
-  const { user,loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [CurrentUserInfo, setCurrentUserInfo] = useState({});
+  const [loading, setLoading] = useState(true)
   console.log(user)
   let email = user?.email;
   console.log(email);
@@ -61,21 +63,21 @@ const UserProfile = () => {
           const data = await response.json();
           console.log(data);
           setCurrentUserInfo(data.data);
-          // if (data.data == null) {
-          //   setCurrentUserInfo(user);
-          //   console.log("CurrentUserInfo");
-          // }
+          setLoading(false)
         } catch (error) {
           console.error(error);
         }
       };
       fetchData();
     }
+    
   }, [user]);
 
-  // if (loading) {
-  //   return <h1>Loading.....</h1>;
-  // }
+  if(loading){
+    return <div className="">
+      <LoadingPage ></LoadingPage>
+    </div>
+  }
 
   return (
     <div className="w-3/5 mx-auto bg-white p-10 shadow-2xl">

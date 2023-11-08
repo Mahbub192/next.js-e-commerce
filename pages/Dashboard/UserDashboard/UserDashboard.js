@@ -3,12 +3,16 @@ import { FaList } from "react-icons/fa";
 import UserSalesStatics from "./UserSalesStatics/UserSalesStatics";
 import UserMostSellingCategory from "./UserMostSellingCategory/UserMostSellingCategory";
 import { AuthContext } from "@/pages/providers/AuthProvider";
+import LoadingPage from "@/pages/LoadingPage/LoadingPage";
 
 const UserDashboard = () => {
   const { user } = useContext(AuthContext);
   const [product, setProduct] = useState([]);
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true)
   let email = user?.email;
+
+
   useEffect(() => {
     const fetchData = async () => {
       if (email) {
@@ -34,6 +38,7 @@ const UserDashboard = () => {
           console.error("Error fetching data:", error);
         }
       }
+      setLoading(false)
     };
 
     fetchData();
@@ -48,6 +53,13 @@ const UserDashboard = () => {
   const price = items?.map(price => price?.price)
   const total = price?.reduce((acc, price) => acc + price, 0);
   console.log(47, total)
+
+ 
+  if(loading){
+    return <div className="">
+      <LoadingPage ></LoadingPage>
+    </div>
+  }
 
   return (
     <div>
@@ -82,7 +94,7 @@ const UserDashboard = () => {
           <div className="flex justify-between items-center border-2 border-gray-300 p-5 bg-white">
             <div>
               <h1 className="text-xl font-bold">{statusDone.length}</h1>
-              <p>Number of Total Done Pending </p>
+              <p>Number of Total Status Done  </p>
             </div>
             <p className="text-2xl font-bold text-green-400">
               <FaList></FaList>

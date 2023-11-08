@@ -16,6 +16,7 @@ import MyOrder from "./UserDashboard/MyOrder/MyOrder";
 import Link from "next/link";
 import SellingProductUpdate from "./UserDashboard/SellingProductUpdate/SellingProductUpdate";
 import ProductsStatusChange from "./AdminDashboard/ProductsStatusChange/ProductsStatusChange";
+import LoadingPage from "../LoadingPage/LoadingPage";
 
 const { Sider, Content } = Layout;
 
@@ -48,6 +49,9 @@ const DashboardLayout = () => {
       setContent(isAdmin ? <ProductsStatusChange /> : <SellingProductUpdate />);
     }
   };
+  // if(!user){
+  //   return <LoadingPage />
+  // }
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -138,7 +142,7 @@ const DashboardLayout = () => {
 
       <Layout>
         <Content style={{ margin: "16px" }}>
-          <div style={{ padding: "40px", minHeight: "360px" }}>{content}</div>
+          <div style={{ padding: "40px", minHeight: "360px" }}>{user? content : <LoadingPage/>} </div>
         </Content>
       </Layout>
     </Layout>
