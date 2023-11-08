@@ -1,9 +1,9 @@
 import { MongoClient } from 'mongodb';
 
-// const uri = "mongodb+srv://imranachieveit:m9Ijfr8zSu4VPf6r@cluster0.o2tls7p.mongodb.net/?retryWrites=true&w=majority";
+const uri = "mongodb+srv://imranachieveit:m9Ijfr8zSu4VPf6r@cluster0.o2tls7p.mongodb.net/?retryWrites=true&w=majority";
 // const dbName = "imranachieveit"
 
-const uri = "mongodb+srv://ecommerce:CA8CfDdxRIfueDsA@cluster0.z2pkgy1.mongodb.net/";
+// const uri = "mongodb+srv://ecommerce:CA8CfDdxRIfueDsA@cluster0.z2pkgy1.mongodb.net/";
 const dbName = "imranachieveit"
 
 let cachedClient = null;

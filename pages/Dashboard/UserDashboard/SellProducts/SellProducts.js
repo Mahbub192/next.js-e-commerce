@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsShop } from "react-icons/bs";
 import {
+  FaBangladeshiTakaSign,
   FaLocationDot,
   FaPhone,
   FaRegImages,
@@ -15,10 +16,13 @@ import Swal from "sweetalert2";
 import { AuthContext } from "@/pages/providers/AuthProvider";
 
 const SellProducts = (props) => {
-  console.log(18, "props", props)
   const { user } = useContext(AuthContext);
   const [ImageUrl, setImageUrl] = useState([]);
+  const [productCategory, setProductCategory] = useState()
+  const {sub_category, setMenuValue, scrollToProductSection} = useContext(AuthContext)
+  console.log(23, sub_category)
   let email;
+  console.log(26, productCategory)
   const {
     register,
     handleSubmit,
@@ -31,12 +35,13 @@ const SellProducts = (props) => {
     const productInfo = {
       id: props?.id,
       email: user?.email,
+      price: data.price,
       productOwnerName: data.name,
       shopName: data.shopName,
       title: data.productName,
       location: data.location,
       category: data.category,
-      sub_category : data.sub_category,
+      sub_category: data.sub_category,
       phoneNumber: data.phoneNumber,
       images: ImageUrl,
       description: data.message,
@@ -130,18 +135,22 @@ const SellProducts = (props) => {
                 <span className="pl-2">Product Category </span>
               </span>
             </label>
-            <select {...register("category")} className="input input-bordered">
+            <select
+              {...register("category")}
+              className="input input-bordered"
+              onChange={(e) => setMenuValue(e.target.value)}
+              value={productCategory}
+            >
+              <option value="Health & Beauty"> --- Select Category --- </option>
               <option value="Health & Beauty">Health & Beauty</option>
               <option value="Daily Needs">Daily Needs</option>
-              <option value="Men's & Boy's Fashion">  Men's & Boy's Fashion </option>
+              <option value="Men's & Boy's Fashion">Men's & Boy's Fashion</option>
               <option value="Electronic Device">Electronic Device</option>
               <option value="Sports & Outdoor">Sports & Outdoor</option>
               <option value="Home & Lifestyle">Home & Lifestyle</option>
               <option value="Groceries">Groceries</option>
               <option value="Girl's Fashion">Girl's Fashion</option>
-              <option value="Vehicle & Accessories">
-                Vehicle & Accessories
-              </option>
+              <option value="Vehicle & Accessories">Vehicle & Accessories</option>
               <option value="Kids Fashion">Kids Fashion</option>
               <option value="All Categories">All Categories</option>
             </select>
@@ -161,8 +170,12 @@ const SellProducts = (props) => {
             <select
               {...register("sub_category")}
               className="input input-bordered"
+              disabled ={sub_category.length>0? false : true}
             >
-              <option value="Health & Beauty">Health & Beauty</option>
+              {
+                sub_category?.map(category => <option value={category}>{category}</option>)
+              }
+              {/* <option value="Health & Beauty">Health & Beauty</option>
               <option value="Men's & Boy's Fashion">
                 Men's & Boy's Fashion
               </option>
@@ -175,7 +188,7 @@ const SellProducts = (props) => {
                 Vehicle & Accessories
               </option>
               <option value="Kids Fashion">Kids Fashion</option>
-              <option value="All Categories">All Categories</option>
+              <option value="All Categories">All Categories</option> */}
             </select>
           </div>
           <div className="form-control w-2/5">
@@ -217,6 +230,38 @@ const SellProducts = (props) => {
             <label className="label ">
               <span className="label-text flex items-center">
                 {" "}
+                <FaBangladeshiTakaSign />{" "}
+                <span className="pl-2">Product Price</span>
+              </span>
+            </label>
+            <input
+              type="text"
+              {...register("price", { required: true })}
+              name="price"
+              placeholder="Price"
+              className="input input-bordered"
+            />
+          </div>
+        </div>
+
+        <div className="md:mx-10 mt-5">
+          <label className="label ">
+            <span className="label-text flex items-center">
+              {" "}
+              <FaRegImages />{" "}
+              <span className="pl-2">Select Product Image More then 3 *</span>
+            </span>
+          </label>
+          <div>
+            <ImageUploadForm ImageUrl={ImageUrl} setImageUrl={setImageUrl} />
+          </div>
+        </div>
+
+        <div >
+          <div className="form-control md:mx-10 mt-4">
+            <label className="label ">
+              <span className="label-text flex items-center">
+                {" "}
                 <FaLocationDot /> <span className="pl-2">Location</span>
               </span>
             </label>
@@ -229,23 +274,9 @@ const SellProducts = (props) => {
             />
           </div>
         </div>
-        <div>
-          <div className="md:mx-10 mt-5">
-            <label className="label ">
-              <span className="label-text flex items-center">
-                {" "}
-                <FaRegImages />{" "}
-                <span className="pl-2">Select Product Image More then 3 *</span>
-              </span>
-            </label>
-            <div>
-              <ImageUploadForm ImageUrl={ImageUrl} setImageUrl={setImageUrl} />
-            </div>
-          </div>
-        </div>
 
         <div className="">
-          <div className="form-control  md:mx-10 mt-4">
+          <div className="form-control  md:mx-10 ">
             <label className="label ">
               <span className="label-text flex items-center">
                 {" "}

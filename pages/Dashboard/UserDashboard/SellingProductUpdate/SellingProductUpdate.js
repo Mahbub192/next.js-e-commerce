@@ -48,6 +48,7 @@ const SellingProductUpdate = () => {
               <th>Product Name</th>
               <th>Shop Name</th>
               <th>Quantity</th>
+              <th>Price</th>
               <th>Date</th>
               <th>Status</th>
               <th>Customer Review</th>
@@ -70,7 +71,8 @@ const SellingProductUpdate = () => {
                     </th>
                     <td>{singleProduct?.title}</td>
                     <th>{singleProduct?.shopName}</th>
-                    <td >{singleProduct.stock}</td>
+                    <td >{singleProduct?.stock}</td>
+                    <td>{singleProduct?.price}</td>
                     <th >{singleProduct.date}</th>
                     <td className={singleProduct.status === "pending" ? "bg-red-300" : "bg-green-400"}>{singleProduct.status}</td>
                     <td>...</td>
