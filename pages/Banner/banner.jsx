@@ -28,7 +28,7 @@ import { Autoplay, Navigation } from "swiper/modules";
 import RoundCard from "../componants/RoundCard";
 import RightSideBar from "../componants/RightSideBar";
 import { AuthContext } from "../providers/AuthProvider";
-import { Link } from 'react-scroll';
+import { Link } from "react-scroll";
 
 const categories = [
   {
@@ -84,18 +84,13 @@ const categories = [
   {
     id: "11",
     name: "Daily Needs",
-    icon: <FaShoppingBasket></FaShoppingBasket>
+    icon: <FaShoppingBasket></FaShoppingBasket>,
   },
 ];
 
-
-
-
-
 const Banner = () => {
-
-
-  const {menuValue, setMenuValue, scrollToProductSection} = useContext(AuthContext)
+  const { menuValue, setMenuValue, scrollToProductSection } =
+    useContext(AuthContext);
   // useEffect(() => {
 
   //   const allData = async () => {
@@ -106,39 +101,25 @@ const Banner = () => {
   //   return allData();
   // }, []);
 
-
-
-
-
   const handleMenu = (menu) => {
-
     setMenuValue(menu);
     scrollToProductSection(); // Invoke scrollToProductSection here
   };
 
-
-
-
-
-
-
-
-
   return (
     <div className="mx-auto container mt-10 ">
-      <div className="grid  grid-cols-3 md:grid-rows-2 md:grid-cols-8 gap-5">
-        <div className="row-span-0 col-span-0 order-1  md:row-span-4 md:col-span-2 md:h-[490px] overflow-hidden ">
+      <div className="md:grid  grid-cols-3 md:grid-rows-2 md:grid-cols-8 gap-5">
+        <div className="row-span-0 col-span-0 order-1  md:row-span-4 md:col-span-2 md:h-[290px] overflow-hidden ">
           {/* drawer start */}
           <div className="drawer lg:drawer-open z-10 ">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
               {/* Page content here */}
             </div>
-            <div className="drawer-side">
+            <div className="drawer-side ">
               <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-              <ul className="menu p-4 w-96  min-h-full bg-white rounded-lg text-base-content">
+              <ul className="menu p-4 w-64 md:w-96   bg-white rounded-lg text-base-content">
                 {/* Sidebar content here */}
-
 
                 <div className="flex justify-between">
                   <h2 className="font-bold text-xl text-accent">
@@ -149,13 +130,14 @@ const Banner = () => {
 
                 {categories.map((category) => {
                   return (
-              
                     <li key={category.id}>
-                    <a className="font-semibold text-base" onClick={()=>handleMenu(category?.name)}>{category?.icon} {category?.name}
-                    </a>
+                      <a
+                        className="font-semibold text-base"
+                        onClick={() => handleMenu(category?.name)}
+                      >
+                        {category?.icon} {category?.name}
+                      </a>
                     </li>
-           
-                  
                   );
                 })}
               </ul>
@@ -199,7 +181,7 @@ const Banner = () => {
           <RoundCard></RoundCard>
         </div>
 
-        <div className="md:col-start-7  md:h-[490px] md:col-span-2 md:row-start-1 md:row-span-2 bg-white order-4 rounded-lg overflow-y-auto">
+        <div className="md:col-start-7 mt-10 md:mt-0 px-5 md:px-0 h-[500px] mb-20 shadow-2xl  md:h-[490px] md:col-span-2 md:row-start-1 md:row-span-2 bg-white order-4 rounded-lg overflow-y-auto">
           <RightSideBar></RightSideBar>
         </div>
       </div>

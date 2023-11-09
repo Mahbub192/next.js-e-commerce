@@ -10,6 +10,7 @@ const UserDashboard = () => {
   const [product, setProduct] = useState([]);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true)
+  const [sellingProduct, setSellingProduct] = useState()
   let email = user?.email;
 
 
@@ -30,7 +31,9 @@ const UserDashboard = () => {
           const itemsResponse = await fetch(`/api/buyProduct?email=${email}`);
           if (itemsResponse.ok) {
             const itemsData = await itemsResponse.json();
+            // console.log(33, itemsData)
             setItems(itemsData.data);
+            setSellingProduct(itemsData.data1)
           } else {
             console.error("Failed to fetch items");
           }
@@ -51,9 +54,12 @@ const UserDashboard = () => {
   
 
   const price = items?.map(price => price?.price)
-  const total = price?.reduce((acc, price) => acc + price, 0);
+  const total = price?.reduce((acc, price) => parseFloat(acc) + parseFloat(price), 0);
   console.log(47, total)
 
+  const sellingProductPriceArray = sellingProduct?.map(price => price?.price)
+  const totalSellingProduct = sellingProductPriceArray?.reduce((acc, price) => parseFloat(acc) + parseFloat(price), 0);
+  console.log(47, total)
  
   if(loading){
     return <div className="">
@@ -82,7 +88,7 @@ const UserDashboard = () => {
         <div className="w-full md:w-1/5">
           <div className="flex justify-between items-center border-2 border-gray-300 p-5 bg-white">
             <div>
-              <h1 className="text-xl font-bold">356</h1>
+              <h1 className="text-xl font-bold">{totalSellingProduct}</h1>
               <p>Amount Total Selling Product</p>
             </div>
             <p className="text-2xl font-bold text-green-400">

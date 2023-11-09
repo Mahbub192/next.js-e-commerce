@@ -59,7 +59,8 @@ const ProductDetails = ({ item }) => {
     } = item;
     const buyItem = {
       id: _id,
-      email,
+      selling: item?.email,
+      buying:email,
       title,
       description,
       price,
@@ -81,7 +82,8 @@ const ProductDetails = ({ item }) => {
       body: JSON.stringify(buyItem),
     });
     const responseData = await response.json();
-    window.location.replace(responseData.url);
+    // window.location.replace(responseData.url);
+    console.log(responseData)
     if (responseData.data.acknowledged) {
       Swal.fire({
         icon: "success",

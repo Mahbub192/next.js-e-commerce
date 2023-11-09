@@ -6,12 +6,12 @@ import model3 from "../../../public/assets/images/rainbow-baby-activity-gym_ukno
 
 const MostSell = () => {
   return (
-    <>
-      <h1 className="container text-lg font-semibold mb-2 mx-auto">
+    <div className="pt-10 bg-white px-5 md:px-0">
+      <h1 className="container text-2xl font-bold underline mb-2 mx-auto">
         Most Viewed{" "}
       </h1>
-      <div className="container mx-auto bg-white flex py-20 rounded">
-        <div className="flex  gap-2">
+      <div className="container mx-auto  flex flex-wrap py-20 rounded">
+        <div className="flex items-center gap-2">
           <div>
             <Image src={model1} alt="img" width={150} height={150} />
           </div>
@@ -23,7 +23,7 @@ const MostSell = () => {
             </p>
           </div>
         </div>
-        <div className="flex  gap-2">
+        <div className="flex items-center  gap-2 mt-8 md:mt-8">
           <div>
             <Image src={model2} alt="img" width={150} height={150} />
           </div>
@@ -35,7 +35,7 @@ const MostSell = () => {
             </p>
           </div>
         </div>
-        <div className="flex  gap-2">
+        <div className="flex items-center  gap-2 mt-8 md:mt-8">
           <div>
             <Image src={model3} alt="img" width={150} height={150} />
           </div>
@@ -48,7 +48,7 @@ const MostSell = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
