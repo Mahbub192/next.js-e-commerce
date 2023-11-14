@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import SingleProduct from "./SingleProduct";
 import { AuthContext } from "@/pages/providers/AuthProvider";
+import LoadingPage from "@/pages/LoadingPage/LoadingPage";
 
 const MyOrder = () => {
   const { user } = useContext(AuthContext);
   const [items, setItems]= useState([])
+  const [loading, setLoading] = useState(true)
   let email = user?.email;
 
   useEffect(() => {
@@ -12,9 +14,17 @@ const MyOrder = () => {
       const res = await fetch(`/api/buyProduct?email=${email}`);
       const data = await res.json();
       setItems(data.data);
+      setLoading(false)
     };
     allBuyItem();
   }, email);
+
+  if(loading){
+    return <div className="">
+      <LoadingPage ></LoadingPage>
+    </div>
+  }
+
   return (
     <div className="w-5/6 mx-auto shadow-xl bg-white p-10">
       <div className="mb-10">

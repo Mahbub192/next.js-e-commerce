@@ -11,19 +11,19 @@ import Image from "next/image";
 
 const Brand = () => {
   return (
-    <div className="container mx-auto mt-20">
-      <h1 className="text-xl font-bold text-gray-600">Top Brands</h1>
+    <div className="container mx-auto mt-20 px-5 md:px-0">
+      <h1 className="text-2xl font-bold underline text-gray-600 ">Top Brands</h1>
       <div className="divider"></div>
       <div className=" py-4 ">
-        <div className="flex gap-16 h-20 w-36 item-center">
-          <Image className="" src={img1} alt="brand" />
-          <Image className="" src={img2} alt="brand" />
-          <Image className="" src={img3} alt="brand" />
-          <Image className="" src={img4} alt="brand" />
-          <Image className="" src={img5} alt="brand" />
-          <Image className="" src={img6} alt="brand" />
-          <Image className="" src={img7} alt="brand" />
-          <Image className="" src={img8} alt="brand" />
+        <div className="grid grid-cols-2 md:grid-cols-8 gap-2 ">
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img1} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img2} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img3} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img4} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img5} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img6} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img7} alt="brand" />
+          <Image className="h-20 w-24 md:h-28 md:w-36" src={img8} alt="brand" />
         </div>
       </div>
       <div className="divider"></div>

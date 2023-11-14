@@ -9,20 +9,23 @@ async function buyProduct(req, res) {
 
     if (req.method === "POST") {
       const product = req.body;
-      // Retrieve all products from the database
+      // Insert the product into the database
       const result = await BuyProduct.insertOne(product);
 
-      // Respond with the retrieved products and a success status
+      // Respond with the inserted product and a success status
       res.status(200).json({ message: "Success", status: 200, data: result });
     } else if (req.method === "GET") {
       const email = req.query.email;
-      const query = { email: email };
+      const query = { buying: email };
+      const query1 = { selling: email };
       const items = await BuyProduct.find(query).toArray();
-    //   console.log(21, items);
+      const items1 = await BuyProduct.find(query1).toArray();
+
       res.status(200).json({
         message: "Find the User",
         status: 200,
         data: items,
+        data1: items1,
       });
     }
   } catch (error) {
