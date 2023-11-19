@@ -5,19 +5,19 @@ const SingleAddCart = ({
   scart,
   removeFromCart,
   handleCheckBox,
-  checkItem,
-  setSingleChecked,
-  singleChecked
+  checkboxes,
+  index
 }) => {
+  console.log(11, checkboxes)
   return (
     <tr>
       <td>
         <label>
         <input
-            onClick={() => handleCheckBox(scart?._id, singleChecked)}
+            onClick={() => handleCheckBox(scart?._id, index)}
             type="checkbox"
             className="checkbox"
-            checked={singleChecked}
+            checked={checkboxes[index]}
           />
         </label>
       </td>

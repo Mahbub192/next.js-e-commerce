@@ -9,12 +9,23 @@ const cart = () => {
     removeFromCart,
     state: { cart, error, loading },
   } = useContext(AuthContext);
-  const [isChecked, setChecked] = useState(false);
+
+  const [isChecked, setChecked] = useState(true);
   const [singleChecked, setSingleChecked] = useState(true);
   const [totalProduct, setTotalProduct] = useState(localStorageData);
   const [totalPrice, setTotalPrice] = useState();
   const [checkedItems, setCheckedItems] = useState({});
-  
+  const [checkboxes, setCheckboxes] = useState();
+
+  useEffect(() => {
+    const initialCheckboxes = Array.from(
+      { length: localStorageData?.length },
+      () => true
+    );
+    console.log(13, initialCheckboxes);
+    setCheckboxes(initialCheckboxes);
+    console.log(20, checkboxes);
+  }, [localStorageData]);
 
   let price = localStorageData?.map((price) => price?.price);
   let total = price?.reduce((acc, price) => acc + price, 0);
@@ -24,9 +35,10 @@ const cart = () => {
     setTotalPrice(total);
   }, [localStorageData, total]);
 
-  const handleCheckBox = (id) => {
+  const handleCheckBox = (id, index) => {
+    setChecked(false)
     const itemIndex = totalProduct?.findIndex((item) => item?._id === id);
-  
+
     if (itemIndex !== -1) {
       // Item exists, remove it
       const updatedData = totalProduct?.filter((item) => item._id !== id);
@@ -45,17 +57,22 @@ const cart = () => {
       total = price?.reduce((acc, price) => acc + price, 0);
       setTotalPrice(total);
     }
-  
-    setSingleChecked((prevSingleChecked) => !prevSingleChecked); // Toggle the singleChecked state
-    setCheckedItems((prevCheckedItems) => ({
-      ...prevCheckedItems,
-      [id]: !prevCheckedItems[id],
-    }));
+
+    // let price = localStorageData?.map((singleProduct) => singleProduct?._id === id);
+    setCheckboxes((prevCheckboxes) => {
+      const newCheckboxes = [...prevCheckboxes];
+      newCheckboxes[index] = !newCheckboxes[index];
+      return newCheckboxes;
+    });
     console.log(52, checkedItems);
   };
 
-  
   const handleCheckBoxAll = () => {
+    const initialCheckboxes = Array.from(
+      { length: localStorageData?.length },
+      () => true
+    );
+    setCheckboxes(initialCheckboxes);
     setChecked(!isChecked);
     setSingleChecked(true);
     setTotalProduct(localStorageData);
@@ -95,14 +112,13 @@ const cart = () => {
             </thead>
             <tbody>
               {
-                (content = localStorageData?.map((product) => (
+                (content = localStorageData?.map((product, index) => (
                   <SingleAddCart
                     key={product?._id}
+                    index={index}
                     handleCheckBox={handleCheckBox}
-                    checkItem={checkedItems[product?._id] }
+                    checkboxes={checkboxes}
                     scart={product}
-                    singleChecked={singleChecked}
-                    setSingleChecked={setSingleChecked}
                     removeFromCart={removeFromCart}
                   />
                 )))
