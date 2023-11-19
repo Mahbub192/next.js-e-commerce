@@ -9,6 +9,7 @@ import Footer from "./Shared/Footer";
 import Brand from "./componants/Brand";
 import MostSell from "./componants/MostSell/MostSell";
 import ProductSection from "./componants/ProductSection";
+import DailyNeeds from "./DailyNeeds/DailyNeeds";
 
 const index = () => {
   return (
@@ -16,12 +17,13 @@ const index = () => {
       <Header />
       <Navbar />
       <Banner />
+      <DailyNeeds />
       <Equipment />
       <Add />
-      <div id="product-section" >
-      <ProductSection/>  {/* Use className here */}
+      <div id="product-section">
+        <ProductSection /> {/* Use className here */}
       </div>
-      
+
       <Brand />
       <MostSell />
       <Footer />

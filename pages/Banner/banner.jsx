@@ -29,6 +29,7 @@ import RoundCard from "../componants/RoundCard";
 import RightSideBar from "../componants/RightSideBar";
 import { AuthContext } from "../providers/AuthProvider";
 import { Link } from "react-scroll";
+import { Pagination } from "swiper/modules";
 
 const categories = [
   {
@@ -109,7 +110,7 @@ const Banner = () => {
   return (
     <div className="mx-auto container mt-10 ">
       <div className="md:grid  grid-cols-3 md:grid-rows-2 md:grid-cols-8 gap-5">
-        <div className="row-span-0 col-span-0 order-1  md:row-span-4 md:col-span-2 md:h-[290px] overflow-hidden ">
+        <div className="row-span-0 col-span-0 order-1  md:row-span-4 md:col-span-2 md:h-[490px] overflow-hidden ">
           {/* drawer start */}
           <div className="drawer lg:drawer-open z-10 ">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -151,13 +152,13 @@ const Banner = () => {
           <Swiper
             spaceBetween={30}
             centeredSlides={true}
-            // autoplay={{
-            //   delay: 500,
-            //   disableOnInteraction: false,
-            // }}
-            // pagination={{
-            //   clickable: true,
-            // }}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            pagination={{
+              clickable: true,
+            }}
             navigation={true}
             modules={[Autoplay, Navigation]}
             className="mySwiper"
@@ -178,7 +179,37 @@ const Banner = () => {
             </SwiperSlide>
           </Swiper>
 
-          <RoundCard></RoundCard>
+          {/* slider  */}
+          <div className="bg-white rounded-xl px-5">
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={30}
+              pagination={{
+                clickable: true,
+              }}
+              
+              modules={[Pagination]}
+              className="mySwiper"
+            >
+              {categories?.map((category) => {
+                return (
+                  <SwiperSlide>
+                    <div className="pb-12 mt-12 " key={category.id}>
+                      <a
+                        className="font-semibold text-base "
+                        onClick={() => handleMenu(category?.name)}
+                      >
+                        <p className="text-xl md:text-5xl ">{category?.icon}</p> 
+                        <p className="md:text-xl">{category?.name}</p>
+                      </a>
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </div>
+
+          {/* <RoundCard></RoundCard> */}
         </div>
 
         <div className="md:col-start-7 mt-10 md:mt-0 px-5 md:px-0 h-[500px] mb-20 shadow-2xl  md:h-[490px] md:col-span-2 md:row-start-1 md:row-span-2 bg-white order-4 rounded-lg overflow-y-auto">

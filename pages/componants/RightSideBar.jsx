@@ -8,9 +8,25 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 
 const RightSideBar = () => {
+ 
   const {
     state: { products, error, loading },
   } = useContext(AuthContext);
+  const [array, setArray] = useState(products);
+
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Shuffle the array to change its position
+      const shuffledArray = [...products].sort(() => Math.random() - 0.5);
+      setArray(shuffledArray);
+    }, 4000); // 40 seconds
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+  }, [products]);
+
+
 
   return (
     <div>
@@ -18,8 +34,8 @@ const RightSideBar = () => {
         🏴󠁧󠁢󠁷󠁬󠁳󠁿 Most Selling Produce{" "}
       </h1>
       <div className="">
-        {products &&
-          products
+        {array &&
+          array
             .filter((singleProduct) => singleProduct.rating >= 4.5)
             .map((singleProduct) => (
               <div key={singleProduct._id}>
