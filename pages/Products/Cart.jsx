@@ -22,9 +22,7 @@ const cart = () => {
       { length: localStorageData?.length },
       () => true
     );
-    console.log(13, initialCheckboxes);
     setCheckboxes(initialCheckboxes);
-    console.log(20, checkboxes);
   }, [localStorageData]);
 
   let price = localStorageData?.map((price) => price?.price);
@@ -111,7 +109,7 @@ const cart = () => {
               </tr>
             </thead>
             <tbody>
-              {
+              {checkboxes &&
                 (content = localStorageData?.map((product, index) => (
                   <SingleAddCart
                     key={product?._id}

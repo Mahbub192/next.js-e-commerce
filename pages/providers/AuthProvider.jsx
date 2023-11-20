@@ -103,7 +103,7 @@ const AuthProvider = ({ children }) => {
       localStorage.setItem("cartData", JSON.stringify(updatedProducts));
       setLocalStorageData(updatedProducts);
       console.log(updatedProducts);
-      window.location.replace("http://localhost:3000/Products/Cart");
+      // window.location.replace("http://localhost:3000/Products/Cart");
     } else {
       console.log("Nothing");
     }

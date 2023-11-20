@@ -15,7 +15,6 @@ const DailyNeeds = () => {
   const dailyNeed = products?.filter(
     (singleProduct) => singleProduct.category == "Daily Needs"
   );
-  console.log(8, products);
   const settings = {
     dots: true,
     infinite: true,
