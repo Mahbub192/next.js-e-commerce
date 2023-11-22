@@ -17,7 +17,7 @@ const MyOrder = () => {
       setLoading(false)
     };
     allBuyItem();
-  }, email);
+  }, [email]);
 
   if(loading){
     return <div className="">

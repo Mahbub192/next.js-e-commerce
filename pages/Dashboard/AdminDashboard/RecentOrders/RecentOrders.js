@@ -1,6 +1,6 @@
 import React from "react";
 
-const RecentOrders = () => {
+const RecentOrders = ({ matchedDates }) => {
   return (
     <div className="mt-10 w-4/6 mx-auto p-8 bg-white">
       <div className="flex justify-between items-center ">
@@ -15,24 +15,26 @@ const RecentOrders = () => {
           {/* head */}
           <thead>
             <tr>
-              <th>Item</th>
+              <th>UserName</th>
+              <th>Product Name</th>
               <th>Product Id</th>
               <th>Price</th>
-              <th>STATUS</th>
-              <th>Action</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
             {/* row 1 */}
-            <tr>
-              <th>Apple MacBook Pro 17"</th>
-              <th>#XY-25G</th>
-              <th>$2999.00</th>
-              <th>Active</th>
-              <th>
-                <button>View</button>
-              </th>
-            </tr>
+            {matchedDates?.map((singleProduct) => (
+              <tr key={singleProduct?._id}>
+                <td>{singleProduct?.userName}</td>
+                <td>{singleProduct?.title}</td>
+                <td>{singleProduct?.id}</td>
+                <td>$ {singleProduct?.price}</td>
+                <td>
+                  <button>View</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

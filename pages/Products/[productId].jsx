@@ -19,6 +19,7 @@ const ProductDetails = ({ item }) => {
   
   const [ImageChange, setImageChange] = useState(null)
   let email = user?.email;
+  console.log("user", user)
   const [counter, setCounter] = useState(0);
 
   let currentDate = new Date();
@@ -61,6 +62,8 @@ const ProductDetails = ({ item }) => {
       id: _id,
       selling: item?.email,
       buying:email,
+      userName: user?.displayName,
+      userImage: user?.photoURL,
       title,
       description,
       price,
@@ -245,7 +248,7 @@ const ProductDetails = ({ item }) => {
                 {user?.email && (
                   <button
                     onClick={() => handelBuyButton(item)}
-                    className="btn text-white btn-accent mr-2"
+                    className="btn  btn-accent mr-2"
                   >
                     BUY NOW
                   </button>
