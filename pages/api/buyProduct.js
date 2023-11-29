@@ -9,6 +9,7 @@ async function buyProduct(req, res) {
 
     if (req.method === "POST") {
       const product = req.body;
+      console.log(12, product)
       // Insert the product into the database
       const result = await BuyProduct.insertOne(product);
 
@@ -16,17 +17,27 @@ async function buyProduct(req, res) {
       res.status(200).json({ message: "Success", status: 200, data: result });
     } else if (req.method === "GET") {
       const email = req.query.email;
-      const query = { buying: email };
+      if(email){
+        const query = { buying: email };
       const query1 = { selling: email };
       const items = await BuyProduct.find(query).toArray();
       const items1 = await BuyProduct.find(query1).toArray();
 
       res.status(200).json({
-        message: "Find the User",
+        message: "Find the Data",
         status: 200,
         data: items,
         data1: items1,
       });
+      }
+      else{
+        const items = await BuyProduct.find().toArray();
+        res.status(200).json({
+          message: "Find the Data",
+          status: 200,
+          data: items,
+        });
+      }
     }
   } catch (error) {
     // Handle any errors and log them

@@ -1,5 +1,6 @@
 // SingleAddCart.js
 import React from "react";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 const SingleAddCart = ({
   scart,
@@ -17,7 +18,7 @@ const SingleAddCart = ({
             onClick={() => handleCheckBox(scart?._id, index)}
             type="checkbox"
             className="checkbox"
-            checked={checkboxes[index]}
+            checked={checkboxes[index] }
           />
         </label>
       </td>
@@ -35,6 +36,7 @@ const SingleAddCart = ({
             <div className="text-sm opacity-50">
               Available Stock :{" "}
               <span className="text-red-700 text-lg">{scart?.stock}</span>
+              <span onClick={() => removeFromCart(scart?._id)} className="text-lg text-red-500 cursor-pointer"><FaRegTrashCan /></span>
             </div>
           </div>
         </div>

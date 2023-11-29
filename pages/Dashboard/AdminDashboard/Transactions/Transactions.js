@@ -1,6 +1,7 @@
 import React from "react";
 
-const Transactions = () => {
+const Transactions = ({items}) => {
+  console.log(4, items)
   return (
     <div className="mt-10 w-full md:w-1/4">
       <div className=" h-[600px] bg-white p-5">
@@ -24,22 +25,22 @@ const Transactions = () => {
               </thead>
               <tbody>
                 {/* row 1 */}
-                <tr>
+                {items?.map(singleItem => (<tr key={singleItem._id}>
                   <td>
                     <div className="flex items-center space-x-3">
                       <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
                           <img
-                            src="/tailwind-css-component-profile-2@56w.png"
+                            src={singleItem?.userImage}
                             alt="Avatar Tailwind CSS Component"
                           />
                         </div>
                       </div>
                     </div>
                   </td>
-                  <td>Zemlak,</td>
-                  <td>500</td>
-                </tr>
+                  <td>{singleItem?.userName}</td>
+                  <td>{singleItem?.price}</td>
+                </tr>))}
               </tbody>
             </table>
           </div>

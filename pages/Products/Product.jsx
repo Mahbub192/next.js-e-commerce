@@ -2,13 +2,18 @@ import Link from "next/link";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 import { actionTypes } from "../states/productState/ActionTypes";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
+import Swal from "sweetalert2";
 
-const notify = () => toast('Here is your toast.');
+const notify = () => toast("Here is your toast.");
 
 const Product = ({ product }) => {
-
-  const { dispatch ,filterAddCart} = useContext(AuthContext);
+  const {
+    localStorageData,
+    state: { cart, error, loading },
+    dispatch,
+    filterAddCart,
+  } = useContext(AuthContext);
 
   return (
     <div>
@@ -74,11 +79,25 @@ const Product = ({ product }) => {
           </Link>
 
           <button
-            onClick={() =>{
+            onClick={() => {
               // filterAddCart(_id);
-              dispatch({ type: actionTypes.ADD_TO_CARD, payload: product } )
-            }
-            }
+              const ProductId = localStorageData?.find(
+                (singleProduct) => singleProduct?._id == product._id
+              );
+              console.log(ProductId?._id);
+              if(ProductId){
+                Swal.fire({
+                  icon: "success",
+                  title: "This Product all ready add to card",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+              }else{
+                dispatch({ type: actionTypes.ADD_TO_CARD, payload: product });
+              }
+              
+              console.log(80, localStorageData);
+            }}
             className="btn btn-xs  btn-primary text-white"
           >
             Add To Cart
@@ -86,7 +105,6 @@ const Product = ({ product }) => {
         </div>
       </div>
       <Toaster />
-
     </div>
 
     //
